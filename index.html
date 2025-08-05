@@ -1,0 +1,3157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FICOwise - Financial Literacy for Students</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Welcome Screen -->
+    <div class="welcome-screen active" id="welcomeScreen">
+        <div class="container">
+            <div class="logo">FICO<span>wise</span></div>
+            <div class="welcome-card">
+                <h1>Start Your Financial Journey</h1>
+                <p>Learn about credit scores, budgeting, and smart money management tailored to your life stage.</p>
+                <button class="btn-start" onclick="showOnboarding()">Get Started</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Onboarding Screen -->
+    <div class="onboarding-screen" id="onboardingScreen">
+        <div class="container">
+            <div class="question-card">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressBar"></div>
+                </div>
+                
+                <!-- Question 1: Role -->
+                <div id="question1" class="question-step">
+                    <h2>Tell us about yourself</h2>
+                    <div class="role-options">
+                        <div class="role-option" onclick="selectRole(this, 'highschool')">
+                            <h3>📚 High School Student</h3>
+                            <p>I'm learning about money and want to build good financial habits early</p>
+                        </div>
+                        <div class="role-option" onclick="selectRole(this, 'recentgrad')">
+                            <h3>🎓 Recent Graduate</h3>
+                            <p>Just finished school and entering the workforce</p>
+                        </div>
+                        <div class="role-option" onclick="selectRole(this, 'fulltime')">
+                            <h3>💼 Full-Time Worker</h3>
+                            <p>Working full-time and managing various financial responsibilities</p>
+                        </div>
+                        <div class="role-option" onclick="selectRole(this, 'parttime')">
+                            <h3>⏰ Part-Time Worker</h3>
+                            <p>Working part-time while managing other commitments</p>
+                        </div>
+                        <div class="role-option" onclick="selectRole(this, 'other')">
+                            <h3>🌟 Other</h3>
+                            <p>My situation doesn't fit the above categories</p>
+                        </div>
+                    </div>
+                    
+                    <!-- High School Follow-up Questions -->
+                    <div id="highschoolQuestions" class="follow-up-questions">
+                        <h3>Let's learn more about you:</h3>
+                        <div class="question-option">
+                            <label>
+                                <input type="checkbox" name="hs-card"> I have a credit or debit card
+                            </label>
+                        </div>
+                        <div class="question-option">
+                            <label>
+                                <input type="checkbox" name="hs-job"> I have a part-time job or earn money
+                            </label>
+                        </div>
+                        <div class="question-option">
+                            <label>
+                                <input type="checkbox" name="hs-college"> I'm planning to go to college
+                            </label>
+                        </div>
+                        <div class="question-option">
+                            <label>
+                                <input type="checkbox" name="hs-basics"> I want to learn the basics of money management
+                            </label>
+                        </div>
+                        <div class="input-group">
+                            <label>How much do you know about credit scores?</label>
+                            <select name="hs-knowledge">
+                                <option value="">Select one...</option>
+                                <option value="nothing">Nothing at all</option>
+                                <option value="little">I've heard of them but don't understand</option>
+                                <option value="some">I know a little bit</option>
+                                <option value="good">I have a good understanding</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <!-- Recent Graduate Follow-up Questions -->
+                    <div id="recentgradQuestions" class="follow-up-questions">
+                        <h3>Tell us about your financial situation:</h3>
+                        <div class="question-option">
+                            <label>
+                                <input type="checkbox" name="grad-loans"> I have student loans
+                            </label>
+                        </div>
+                        <div class="question-option">
+                            <label>
+                                <input type="checkbox" name="grad-cc"> I have one or more credit cards
+                            </label>
+                        </div>
+                        <div class="question-option">
+                            <label>
+                                <input type="checkbox" name="grad-job"> I've started my first full-time job
+                            </label>
+                        </div>
+                        <div class="question-option">
+                            <label>
+                                <input type="checkbox" name="grad-apartment"> I'm renting an apartment
+                            </label>
+                        </div>
+                        <div class="input-group">
+                            <label>Student loan amount (if applicable):</label>
+                            <select name="grad-loan-amount">
+                                <option value="">Select range...</option>
+                                <option value="none">No loans</option>
+                                <option value="under10k">Under $10,000</option>
+                                <option value="10-25k">$10,000 - $25,000</option>
+                                <option value="25-50k">$25,000 - $50,000</option>
+                                <option value="over50k">Over $50,000</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label>Monthly income range:</label>
+                            <select name="grad-income">
+                                <option value="">Select range...</option>
+                                <option value="under2k">Under $2,000</option>
+                                <option value="2-3k">$2,000 - $3,000</option>
+                                <option value="3-5k">$3,000 - $5,000</option>
+                                <option value="over5k">Over $5,000</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <!-- Full-time Worker Follow-up Questions -->
+                    <div id="fulltimeQuestions" class="follow-up-questions">
+                        <h3>Help us understand your priorities:</h3>
+                        <div class="question-option">
+                            <label>
+                                <input type="checkbox" name="ft-family"> I have dependents (spouse, children, etc.)
+                            </label>
+                        </div>
+                        <div class="question-option">
+                            <label>
+                                <input type="checkbox" name="ft-mortgage"> I have a mortgage
+                            </label>
+                        </div>
+                        <div class="question-option">
+                            <label>
+                                <input type="checkbox" name="ft-rent"> I pay rent
+                            </label>
+                        </div>
+                        <div class="question-option">
+                            <label>
+                                <input type="checkbox" name="ft-debt"> I have credit card debt
+                            </label>
+                        </div>
+                        <div class="question-option">
+                            <label>
+                                <input type="checkbox" name="ft-retirement"> I'm contributing to retirement
+                            </label>
+                        </div>
+                        <div class="input-group">
+                            <label>Current FICO score range (if known):</label>
+                            <select name="ft-score">
+                                <option value="">Select range...</option>
+                                <option value="unknown">I don't know</option>
+                                <option value="under600">Under 600</option>
+                                <option value="600-700">600 - 700</option>
+                                <option value="700-750">700 - 750</option>
+                                <option value="over750">Over 750</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label>Monthly savings goal:</label>
+                            <input type="number" name="ft-savings" placeholder="Enter amount in dollars">
+                        </div>
+                        <div class="radio-group">
+                            <label>Primary financial goal:</label>
+                            <label>
+                                <input type="radio" name="ft-goal" value="emergency"> Build emergency fund
+                            </label>
+                            <label>
+                                <input type="radio" name="ft-goal" value="debt"> Pay off debt
+                            </label>
+                            <label>
+                                <input type="radio" name="ft-goal" value="invest"> Start investing
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <button class="btn-continue" onclick="showDashboard()" disabled id="continueBtn">Continue</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard Screen -->
+    <div class="dashboard-screen" id="dashboardScreen">
+        <div class="container">
+            <div class="dashboard-header">
+                <div class="user-info">
+                    <div class="greeting">
+                        <h1 id="dashboardGreeting">Welcome to Your Financial Dashboard</h1>
+                        <p id="dashboardSubtext">Your personalized learning path is ready</p>
+                    </div>
+                    <div class="user-progress">
+                        <div class="level-display">
+                            <h3 id="userLevel">Level 1</h3>
+                            <p id="userPoints">0 points</p>
+                            <div class="level-progress-bar">
+                                <div class="level-progress-fill" id="levelProgress"></div>
+                            </div>
+                        </div>
+                        <div class="streak-display">
+                            <div id="streakCounter">🔥 0 day streak</div>
+                            <button class="btn-achievements" onclick="showAchievements()">🏆 Achievements</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modules-grid" id="modulesGrid">
+                <!-- Modules will be dynamically inserted here -->
+            </div>
+            
+            <!-- Module Detail Views -->
+            <div class="module-detail" id="creditBasicsDetail">
+                <h3>Credit Basics - Lessons</h3>
+                <ul class="lesson-list">
+                    <li onclick="showLesson('whatIsCredit')">📖 What is Credit?</li>
+                    <li onclick="showLesson('understandingFicoScores')">📊 Understanding FICO Scores</li>
+                    <li onclick="showLesson('scoreRanges')">🎯 Score Ranges: What They Mean</li>
+                    <li onclick="showLesson('ficoFactors')">📈 5 Factors That Affect Your Score</li>
+                    <li onclick="showLesson('creditVsDebit')">💳 Credit vs Debit Cards</li>
+                </ul>
+                <button class="btn-continue" onclick="hideModuleDetail()">Back to Dashboard</button>
+            </div>
+            
+            <!-- What is Credit? Lesson -->
+            <div class="lesson-detail" id="whatIsCredit">
+                <div class="lesson-header">
+                    <h3>📖 What is Credit?</h3>
+                    <div class="lesson-progress-indicator">
+                        <span class="progress-step active" data-step="1">1</span>
+                        <span class="progress-step" data-step="2">2</span>
+                        <span class="progress-step" data-step="3">3</span>
+                        <span class="progress-step" data-step="4">4</span>
+                        <span class="progress-step" data-step="5">5</span>
+                    </div>
+                </div>
+                
+                <!-- Lesson Step 1: Definition -->
+                <div class="lesson-step active" data-step="1">
+                    <div class="lesson-content">
+                        <h4>Let's start with the basics</h4>
+                        <div class="concept-box">
+                            <h5>💡 Credit Definition</h5>
+                            <p><strong>Credit</strong> is the ability to borrow money or access goods and services with the understanding that you'll pay for them later.</p>
+                        </div>
+                        <p>Think of credit like a financial trust system. When someone gives you credit, they're trusting that you'll pay them back according to your agreement.</p>
+                        
+                        <div class="example-box">
+                            <h5>🌟 Real-Life Example</h5>
+                            <p>Imagine you want to buy a $500 laptop but only have $200 in your bank account. With a credit card, you can purchase the laptop today and pay the credit card company back over time.</p>
+                        </div>
+                    </div>
+                    <div class="lesson-navigation">
+                        <button class="btn-lesson-nav" onclick="nextLessonStep()">Next →</button>
+                    </div>
+                </div>
+                
+                <!-- Lesson Step 2: How Credit Works -->
+                <div class="lesson-step" data-step="2">
+                    <div class="lesson-content">
+                        <h4>How Does Credit Work?</h4>
+                        <p>Credit involves three key players:</p>
+                        
+                        <div class="credit-players">
+                            <div class="player-card">
+                                <div class="player-icon">🏦</div>
+                                <h5>Lender</h5>
+                                <p>Banks, credit card companies, or other institutions that provide credit</p>
+                            </div>
+                            <div class="player-card">
+                                <div class="player-icon">👤</div>
+                                <h5>Borrower (You)</h5>
+                                <p>The person who receives credit and promises to pay it back</p>
+                            </div>
+                            <div class="player-card">
+                                <div class="player-icon">📊</div>
+                                <h5>Credit Bureaus</h5>
+                                <p>Companies that track your credit history and create your credit report</p>
+                            </div>
+                        </div>
+                        
+                        <div class="info-box">
+                            <p><strong>The Process:</strong> When you apply for credit, lenders check your credit history to decide if they'll lend to you and what terms they'll offer.</p>
+                        </div>
+                    </div>
+                    <div class="lesson-navigation">
+                        <button class="btn-lesson-nav secondary" onclick="prevLessonStep()">← Back</button>
+                        <button class="btn-lesson-nav" onclick="nextLessonStep()">Next →</button>
+                    </div>
+                </div>
+                
+                <!-- Lesson Step 3: Types of Credit -->
+                <div class="lesson-step" data-step="3">
+                    <div class="lesson-content">
+                        <h4>Types of Credit</h4>
+                        <p>There are several different types of credit you might encounter:</p>
+                        
+                        <div class="credit-types">
+                            <div class="type-card">
+                                <h5>💳 Revolving Credit</h5>
+                                <p><strong>Examples:</strong> Credit cards, lines of credit</p>
+                                <p>You can borrow up to a limit, pay it back, and borrow again.</p>
+                            </div>
+                            <div class="type-card">
+                                <h5>🏠 Installment Credit</h5>
+                                <p><strong>Examples:</strong> Car loans, mortgages, student loans</p>
+                                <p>You borrow a fixed amount and pay it back in regular payments.</p>
+                            </div>
+                            <div class="type-card">
+                                <h5>🔄 Open Credit</h5>
+                                <p><strong>Examples:</strong> Utility bills, charge cards</p>
+                                <p>You must pay the full balance each month.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lesson-navigation">
+                        <button class="btn-lesson-nav secondary" onclick="prevLessonStep()">← Back</button>
+                        <button class="btn-lesson-nav" onclick="nextLessonStep()">Next →</button>
+                    </div>
+                </div>
+                
+                <!-- Lesson Step 4: Why Credit Matters -->
+                <div class="lesson-step" data-step="4">
+                    <div class="lesson-content">
+                        <h4>Why Does Credit Matter?</h4>
+                        <p>Having good credit opens doors to many financial opportunities:</p>
+                        
+                        <div class="benefits-grid">
+                            <div class="benefit-item">
+                                <div class="benefit-icon">🏠</div>
+                                <h5>Buy a Home</h5>
+                                <p>Most people need a mortgage to buy a house</p>
+                            </div>
+                            <div class="benefit-item">
+                                <div class="benefit-icon">🚗</div>
+                                <h5>Finance a Car</h5>
+                                <p>Get better interest rates on auto loans</p>
+                            </div>
+                            <div class="benefit-item">
+                                <div class="benefit-icon">💰</div>
+                                <h5>Lower Interest Rates</h5>
+                                <p>Save money on all types of loans</p>
+                            </div>
+                            <div class="benefit-item">
+                                <div class="benefit-icon">📱</div>
+                                <h5>Phone Plans</h5>
+                                <p>Get cell phone contracts without deposits</p>
+                            </div>
+                            <div class="benefit-item">
+                                <div class="benefit-icon">🏢</div>
+                                <h5>Rent Apartments</h5>
+                                <p>Landlords often check credit scores</p>
+                            </div>
+                            <div class="benefit-item">
+                                <div class="benefit-icon">💼</div>
+                                <h5>Job Opportunities</h5>
+                                <p>Some employers check credit for certain positions</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lesson-navigation">
+                        <button class="btn-lesson-nav secondary" onclick="prevLessonStep()">← Back</button>
+                        <button class="btn-lesson-nav" onclick="nextLessonStep()">Next →</button>
+                    </div>
+                </div>
+                
+                <!-- Lesson Step 5: Quiz and Summary -->
+                <div class="lesson-step" data-step="5">
+                    <div class="lesson-content">
+                        <h4>Quick Knowledge Check</h4>
+                        <div class="quiz-section">
+                            <div class="quiz-question">
+                                <p><strong>Question:</strong> What is credit?</p>
+                                <div class="quiz-options">
+                                    <label class="quiz-option">
+                                        <input type="radio" name="q1" value="a">
+                                        <span>Money you already have in the bank</span>
+                                    </label>
+                                    <label class="quiz-option">
+                                        <input type="radio" name="q1" value="b">
+                                        <span>The ability to borrow money with a promise to pay it back</span>
+                                    </label>
+                                    <label class="quiz-option">
+                                        <input type="radio" name="q1" value="c">
+                                        <span>A type of savings account</span>
+                                    </label>
+                                </div>
+                                <button class="btn-check-answer" onclick="checkQuizAnswer('q1', 'b')">Check Answer</button>
+                                <div class="quiz-feedback" id="q1-feedback"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="lesson-summary">
+                            <h5>🎯 Key Takeaways</h5>
+                            <ul>
+                                <li>Credit is the ability to borrow money with a promise to pay it back</li>
+                                <li>There are three main types: revolving, installment, and open credit</li>
+                                <li>Good credit opens doors to better financial opportunities</li>
+                                <li>Building credit early sets you up for future success</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="lesson-navigation">
+                        <button class="btn-lesson-nav secondary" onclick="prevLessonStep()">← Back</button>
+                        <button class="btn-lesson-nav success" onclick="completeLesson('whatIsCredit')">Complete Lesson ✓</button>
+                    </div>
+                </div>
+                
+                <button class="btn-continue" onclick="hideLesson()">Back to Lessons</button>
+            </div>
+            
+            <!-- Understanding FICO Scores Lesson -->
+            <div class="lesson-detail" id="understandingFicoScores">
+                <div class="lesson-header">
+                    <h3>📊 Understanding FICO Scores</h3>
+                    <div class="lesson-progress-indicator">
+                        <span class="progress-step active" data-step="1">1</span>
+                        <span class="progress-step" data-step="2">2</span>
+                        <span class="progress-step" data-step="3">3</span>
+                        <span class="progress-step" data-step="4">4</span>
+                        <span class="progress-step" data-step="5">5</span>
+                    </div>
+                </div>
+                
+                <!-- Lesson Step 1: What is a FICO Score -->
+                <div class="lesson-step active" data-step="1">
+                    <div class="lesson-content">
+                        <h4>What is a FICO Score?</h4>
+                        <div class="concept-box">
+                            <h5>💡 FICO Score Definition</h5>
+                            <p>A <strong>FICO Score</strong> is a three-digit number (300-850) that represents your creditworthiness. It tells lenders how likely you are to repay borrowed money on time.</p>
+                        </div>
+                        
+                        <div class="info-box">
+                            <h5>🏢 Created by Fair Isaac Corporation</h5>
+                            <p>FICO stands for Fair Isaac Corporation, the company that created this scoring model in 1989. It's now the most widely used credit scoring system.</p>
+                        </div>
+                        
+                        <div class="example-box">
+                            <h5>🌟 Why It Matters</h5>
+                            <p>Your FICO score affects:</p>
+                            <ul>
+                                <li>Whether you get approved for loans and credit cards</li>
+                                <li>The interest rates you'll pay</li>
+                                <li>Credit limits you'll receive</li>
+                                <li>Sometimes even job opportunities and housing</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="lesson-navigation">
+                        <button class="btn-lesson-nav" onclick="nextLessonStep()">Next →</button>
+                    </div>
+                </div>
+                
+                <!-- Lesson Step 2: Score Ranges -->
+                <div class="lesson-step" data-step="2">
+                    <div class="lesson-content">
+                        <h4>FICO Score Ranges</h4>
+                        <p>FICO scores range from 300 to 850. Here's what each range typically means:</p>
+                        
+                        <div class="score-ranges">
+                            <div class="score-range excellent">
+                                <div class="range-number">800-850</div>
+                                <h5>🌟 Excellent</h5>
+                                <p>Qualify for the best rates and terms</p>
+                                <div class="range-benefits">
+                                    <p>• Lowest interest rates</p>
+                                    <p>• Highest credit limits</p>
+                                    <p>• Best credit card rewards</p>
+                                </div>
+                            </div>
+                            <div class="score-range very-good">
+                                <div class="range-number">740-799</div>
+                                <h5>✅ Very Good</h5>
+                                <p>Above average, good rates available</p>
+                                <div class="range-benefits">
+                                    <p>• Competitive interest rates</p>
+                                    <p>• Good credit card options</p>
+                                    <p>• Most loans approved</p>
+                                </div>
+                            </div>
+                            <div class="score-range good">
+                                <div class="range-number">670-739</div>
+                                <h5>👍 Good</h5>
+                                <p>Near or slightly above average</p>
+                                <div class="range-benefits">
+                                    <p>• Fair interest rates</p>
+                                    <p>• Most applications approved</p>
+                                    <p>• Room for improvement</p>
+                                </div>
+                            </div>
+                            <div class="score-range fair">
+                                <div class="range-number">580-669</div>
+                                <h5>⚠️ Fair</h5>
+                                <p>Below average, some challenges</p>
+                                <div class="range-benefits">
+                                    <p>• Higher interest rates</p>
+                                    <p>• May need cosigners</p>
+                                    <p>• Limited credit options</p>
+                                </div>
+                            </div>
+                            <div class="score-range poor">
+                                <div class="range-number">300-579</div>
+                                <h5>❌ Poor</h5>
+                                <p>Well below average, difficult to get credit</p>
+                                <div class="range-benefits">
+                                    <p>• Very high interest rates</p>
+                                    <p>• Secured cards may be needed</p>
+                                    <p>• Focus on rebuilding</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lesson-navigation">
+                        <button class="btn-lesson-nav secondary" onclick="prevLessonStep()">← Back</button>
+                        <button class="btn-lesson-nav" onclick="nextLessonStep()">Next →</button>
+                    </div>
+                </div>
+                
+                <!-- Lesson Step 3: How Scores Are Calculated -->
+                <div class="lesson-step" data-step="3">
+                    <div class="lesson-content">
+                        <h4>How FICO Scores Are Calculated</h4>
+                        <p>Your FICO score is calculated based on five main factors:</p>
+                        
+                        <div class="fico-factors">
+                            <div class="factor-item">
+                                <div class="factor-percent">35%</div>
+                                <div class="factor-content">
+                                    <h5>💳 Payment History</h5>
+                                    <p>Do you pay your bills on time?</p>
+                                    <div class="factor-details">Most important factor. Even one late payment can hurt your score.</div>
+                                </div>
+                            </div>
+                            <div class="factor-item">
+                                <div class="factor-percent">30%</div>
+                                <div class="factor-content">
+                                    <h5>📊 Credit Utilization</h5>
+                                    <p>How much credit are you using?</p>
+                                    <div class="factor-details">Keep balances low. Under 30% is good, under 10% is excellent.</div>
+                                </div>
+                            </div>
+                            <div class="factor-item">
+                                <div class="factor-percent">15%</div>
+                                <div class="factor-content">
+                                    <h5>📅 Length of Credit History</h5>
+                                    <p>How long have you had credit?</p>
+                                    <div class="factor-details">Longer credit history is better. Keep old accounts open.</div>
+                                </div>
+                            </div>
+                            <div class="factor-item">
+                                <div class="factor-percent">10%</div>
+                                <div class="factor-content">
+                                    <h5>🆕 New Credit</h5>
+                                    <p>Have you opened new accounts recently?</p>
+                                    <div class="factor-details">Too many new accounts can lower your score temporarily.</div>
+                                </div>
+                            </div>
+                            <div class="factor-item">
+                                <div class="factor-percent">10%</div>
+                                <div class="factor-content">
+                                    <h5>🔄 Credit Mix</h5>
+                                    <p>Do you have different types of credit?</p>
+                                    <div class="factor-details">Having various credit types (cards, loans) can help your score.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lesson-navigation">
+                        <button class="btn-lesson-nav secondary" onclick="prevLessonStep()">← Back</button>
+                        <button class="btn-lesson-nav" onclick="nextLessonStep()">Next →</button>
+                    </div>
+                </div>
+                
+                <!-- Lesson Step 4: How to Check Your Score -->
+                <div class="lesson-step" data-step="4">
+                    <div class="lesson-content">
+                        <h4>How to Check Your FICO Score</h4>
+                        <div class="checking-options">
+                            <div class="option-card free">
+                                <h5>🆓 Free Options</h5>
+                                <ul>
+                                    <li><strong>Credit card statements:</strong> Many cards show your FICO score monthly</li>
+                                    <li><strong>Bank websites:</strong> Some banks provide free scores to customers</li>
+                                    <li><strong>Credit monitoring services:</strong> Many offer free basic scores</li>
+                                    <li><strong>Experian.com:</strong> Free FICO score with account</li>
+                                </ul>
+                            </div>
+                            <div class="option-card paid">
+                                <h5>💰 Paid Options</h5>
+                                <ul>
+                                    <li><strong>myFICO.com:</strong> Official FICO site with detailed reports</li>
+                                    <li><strong>Credit bureau websites:</strong> Direct from Experian, Equifax, TransUnion</li>
+                                    <li><strong>Credit monitoring services:</strong> Premium plans with alerts</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="important-note">
+                            <h5>⚠️ Important Notes</h5>
+                            <ul>
+                                <li>You might have slightly different scores from different sources</li>
+                                <li>Scores can vary between the three credit bureaus</li>
+                                <li>Free scores are usually accurate enough for monitoring</li>
+                                <li>Check your score regularly but don't obsess over small changes</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="tip-box">
+                            <h5>💡 Pro Tip</h5>
+                            <p>Your credit score updates about once a month when creditors report to the bureaus. Don't check it daily - focus on building good habits instead!</p>
+                        </div>
+                    </div>
+                    <div class="lesson-navigation">
+                        <button class="btn-lesson-nav secondary" onclick="prevLessonStep()">← Back</button>
+                        <button class="btn-lesson-nav" onclick="nextLessonStep()">Next →</button>
+                    </div>
+                </div>
+                
+                <!-- Lesson Step 5: Quiz and Summary -->
+                <div class="lesson-step" data-step="5">
+                    <div class="lesson-content">
+                        <h4>Quick Knowledge Check</h4>
+                        <div class="quiz-section">
+                            <div class="quiz-question">
+                                <p><strong>Question 1:</strong> What FICO score range is considered "Good"?</p>
+                                <div class="quiz-options">
+                                    <label class="quiz-option">
+                                        <input type="radio" name="q2" value="a">
+                                        <span>580-669</span>
+                                    </label>
+                                    <label class="quiz-option">
+                                        <input type="radio" name="q2" value="b">
+                                        <span>670-739</span>
+                                    </label>
+                                    <label class="quiz-option">
+                                        <input type="radio" name="q2" value="c">
+                                        <span>740-799</span>
+                                    </label>
+                                </div>
+                                <button class="btn-check-answer" onclick="checkQuizAnswer('q2', 'b')">Check Answer</button>
+                                <div class="quiz-feedback" id="q2-feedback"></div>
+                            </div>
+                            
+                            <div class="quiz-question">
+                                <p><strong>Question 2:</strong> Which factor has the biggest impact on your FICO score?</p>
+                                <div class="quiz-options">
+                                    <label class="quiz-option">
+                                        <input type="radio" name="q3" value="a">
+                                        <span>Credit utilization (30%)</span>
+                                    </label>
+                                    <label class="quiz-option">
+                                        <input type="radio" name="q3" value="b">
+                                        <span>Payment history (35%)</span>
+                                    </label>
+                                    <label class="quiz-option">
+                                        <input type="radio" name="q3" value="c">
+                                        <span>Length of credit history (15%)</span>
+                                    </label>
+                                </div>
+                                <button class="btn-check-answer" onclick="checkQuizAnswer('q3', 'b')">Check Answer</button>
+                                <div class="quiz-feedback" id="q3-feedback"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="lesson-summary">
+                            <h5>🎯 Key Takeaways</h5>
+                            <ul>
+                                <li>FICO scores range from 300-850, with higher scores being better</li>
+                                <li>Payment history (35%) is the most important factor</li>
+                                <li>You can check your score for free from many sources</li>
+                                <li>Scores update monthly when creditors report to bureaus</li>
+                                <li>Focus on building good credit habits rather than obsessing over the number</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="lesson-navigation">
+                        <button class="btn-lesson-nav secondary" onclick="prevLessonStep()">← Back</button>
+                        <button class="btn-lesson-nav success" onclick="completeLesson('understandingFicoScores')">Complete Lesson ✓</button>
+                    </div>
+                </div>
+                
+                <button class="btn-continue" onclick="hideLesson()">Back to Lessons</button>
+            </div>
+            
+            <!-- Score Ranges: What They Mean Lesson -->
+            <div class="lesson-detail" id="scoreRanges">
+                <div class="lesson-header">
+                    <h3>🎯 Score Ranges: What They Mean</h3>
+                    <div class="lesson-progress-indicator">
+                        <span class="progress-step active" data-step="1">1</span>
+                        <span class="progress-step" data-step="2">2</span>
+                        <span class="progress-step" data-step="3">3</span>
+                        <span class="progress-step" data-step="4">4</span>
+                    </div>
+                </div>
+                
+                <!-- Lesson Step 1: The Five Credit Score Ranges -->
+                <div class="lesson-step active" data-step="1">
+                    <div class="lesson-content">
+                        <h4>Understanding the Five Credit Score Ranges</h4>
+                        <div class="concept-box">
+                            <h5>💡 Why Ranges Matter</h5>
+                            <p>Credit score ranges help lenders quickly assess risk. Each range represents a different level of creditworthiness and determines what financial products you can access.</p>
+                        </div>
+                        
+                        <div class="detailed-ranges">
+                            <div class="range-detail excellent">
+                                <div class="range-header">
+                                    <div class="range-score">800-850</div>
+                                    <h5>🌟 Excellent Credit</h5>
+                                </div>
+                                <div class="range-info">
+                                    <p><strong>What this means:</strong> You're in the top 20% of consumers. Lenders see you as very low risk.</p>
+                                    <p><strong>What you get:</strong></p>
+                                    <ul>
+                                        <li>Lowest possible interest rates</li>
+                                        <li>Premium credit cards with best rewards</li>
+                                        <li>Easy approval for mortgages and auto loans</li>
+                                        <li>High credit limits</li>
+                                        <li>Best insurance rates</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <div class="range-detail very-good">
+                                <div class="range-header">
+                                    <div class="range-score">740-799</div>
+                                    <h5>✅ Very Good Credit</h5>
+                                </div>
+                                <div class="range-info">
+                                    <p><strong>What this means:</strong> Above-average credit. You qualify for most financial products.</p>
+                                    <p><strong>What you get:</strong></p>
+                                    <ul>
+                                        <li>Competitive interest rates</li>
+                                        <li>Good credit card options with rewards</li>
+                                        <li>Approval for most loans</li>
+                                        <li>Reasonable credit limits</li>
+                                        <li>Good insurance rates</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lesson-navigation">
+                        <button class="btn-lesson-nav" onclick="nextLessonStep()">Next →</button>
+                    </div>
+                </div>
+                
+                <!-- Lesson Step 2: Middle and Lower Ranges -->
+                <div class="lesson-step" data-step="2">
+                    <div class="lesson-content">
+                        <h4>Good, Fair, and Poor Credit Ranges</h4>
+                        
+                        <div class="detailed-ranges">
+                            <div class="range-detail good">
+                                <div class="range-header">
+                                    <div class="range-score">670-739</div>
+                                    <h5>👍 Good Credit</h5>
+                                </div>
+                                <div class="range-info">
+                                    <p><strong>What this means:</strong> Close to the national average. Most lenders will work with you.</p>
+                                    <p><strong>What you get:</strong></p>
+                                    <ul>
+                                        <li>Fair interest rates (slightly above best rates)</li>
+                                        <li>Most credit cards available</li>
+                                        <li>Good chance of loan approval</li>
+                                        <li>Moderate credit limits</li>
+                                    </ul>
+                                    <p><strong>Improvement tip:</strong> Focus on paying down balances and making on-time payments.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="range-detail fair">
+                                <div class="range-header">
+                                    <div class="range-score">580-669</div>
+                                    <h5>⚠️ Fair Credit</h5>
+                                </div>
+                                <div class="range-info">
+                                    <p><strong>What this means:</strong> Below average. You're considered a higher risk to lenders.</p>
+                                    <p><strong>What you get:</strong></p>
+                                    <ul>
+                                        <li>Higher interest rates</li>
+                                        <li>Limited credit card options</li>
+                                        <li>May need cosigners for loans</li>
+                                        <li>Lower credit limits</li>
+                                        <li>Some applications may be denied</li>
+                                    </ul>
+                                    <p><strong>Improvement tip:</strong> Work on payment history and reducing credit card balances.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="range-detail poor">
+                                <div class="range-header">
+                                    <div class="range-score">300-579</div>
+                                    <h5>❌ Poor Credit</h5>
+                                </div>
+                                <div class="range-info">
+                                    <p><strong>What this means:</strong> Significant credit challenges. Most lenders view you as high risk.</p>
+                                    <p><strong>What you get:</strong></p>
+                                    <ul>
+                                        <li>Very high interest rates</li>
+                                        <li>Secured credit cards may be your only option</li>
+                                        <li>Difficulty getting approved for loans</li>
+                                        <li>May need to pay deposits for utilities/phone</li>
+                                    </ul>
+                                    <p><strong>Improvement tip:</strong> Consider credit counseling and focus on rebuilding with secured cards.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lesson-navigation">
+                        <button class="btn-lesson-nav secondary" onclick="prevLessonStep()">← Back</button>
+                        <button class="btn-lesson-nav" onclick="nextLessonStep()">Next →</button>
+                    </div>
+                </div>
+                
+                <!-- Lesson Step 3: Real-World Impact -->
+                <div class="lesson-step" data-step="3">
+                    <div class="lesson-content">
+                        <h4>Real-World Impact of Your Score Range</h4>
+                        
+                        <div class="impact-scenarios">
+                            <div class="scenario-card">
+                                <h5>🏠 Buying a Home</h5>
+                                <div class="scenario-comparison">
+                                    <div class="scenario-item excellent">
+                                        <strong>800+ Score:</strong> 3.2% interest rate on $300K mortgage = $1,296/month
+                                    </div>
+                                    <div class="scenario-item fair">
+                                        <strong>620 Score:</strong> 4.8% interest rate on $300K mortgage = $1,581/month
+                                    </div>
+                                    <div class="cost-difference">
+                                        <strong>Difference:</strong> $285/month or $102,600 over 30 years!
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="scenario-card">
+                                <h5>🚗 Auto Loan</h5>
+                                <div class="scenario-comparison">
+                                    <div class="scenario-item excellent">
+                                        <strong>750+ Score:</strong> 3.5% interest rate on $25K loan = $453/month
+                                    </div>
+                                    <div class="scenario-item fair">
+                                        <strong>620 Score:</strong> 8.9% interest rate on $25K loan = $523/month
+                                    </div>
+                                    <div class="cost-difference">
+                                        <strong>Difference:</strong> $70/month or $4,200 over 5 years
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="scenario-card">
+                                <h5>💳 Credit Cards</h5>
+                                <div class="scenario-comparison">
+                                    <div class="scenario-item excellent">
+                                        <strong>Excellent Credit:</strong> Premium rewards cards, 0% intro APR, high limits
+                                    </div>
+                                    <div class="scenario-item fair">
+                                        <strong>Fair Credit:</strong> Basic cards, 18-25% APR, low limits, annual fees
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="motivation-box">
+                            <h5>💪 The Bottom Line</h5>
+                            <p>Improving your credit score by even 50-100 points can save you thousands of dollars over your lifetime. Every point matters!</p>
+                        </div>
+                    </div>
+                    <div class="lesson-navigation">
+                        <button class="btn-lesson-nav secondary" onclick="prevLessonStep()">← Back</button>
+                        <button class="btn-lesson-nav" onclick="nextLessonStep()">Next →</button>
+                    </div>
+                </div>
+                
+                <!-- Lesson Step 4: Moving Between Ranges -->
+                <div class="lesson-step" data-step="4">
+                    <div class="lesson-content">
+                        <h4>How to Move Between Credit Score Ranges</h4>
+                        
+                        <div class="movement-strategies">
+                            <div class="strategy-section">
+                                <h5>📈 Moving Up a Range (e.g., Fair to Good)</h5>
+                                <div class="action-plan">
+                                    <div class="action-item">
+                                        <div class="action-icon">💳</div>
+                                        <div class="action-content">
+                                            <h6>1. Pay All Bills On Time</h6>
+                                            <p>Set up automatic payments for at least the minimum amount</p>
+                                            <p><strong>Impact:</strong> Biggest factor in your score (35%)</p>
+                                        </div>
+                                    </div>
+                                    <div class="action-item">
+                                        <div class="action-icon">📊</div>
+                                        <div class="action-content">
+                                            <h6>2. Lower Credit Utilization</h6>
+                                            <p>Pay down balances to under 30%, ideally under 10%</p>
+                                            <p><strong>Impact:</strong> Second biggest factor (30%)</p>
+                                        </div>
+                                    </div>
+                                    <div class="action-item">
+                                        <div class="action-icon">🕐</div>
+                                        <div class="action-content">
+                                            <h6>3. Be Patient</h6>
+                                            <p>Keep old accounts open to maintain credit history length</p>
+                                            <p><strong>Impact:</strong> 15% of your score</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="timeline-section">
+                                <h5>⏰ Typical Timeline for Improvement</h5>
+                                <div class="timeline">
+                                    <div class="timeline-item">
+                                        <div class="timeline-period">1-2 months</div>
+                                        <div class="timeline-change">Lower utilization shows up</div>
+                                    </div>
+                                    <div class="timeline-item">
+                                        <div class="timeline-period">3-6 months</div>
+                                        <div class="timeline-change">Consistent payments improve score</div>
+                                    </div>
+                                    <div class="timeline-item">
+                                        <div class="timeline-period">6-12 months</div>
+                                        <div class="timeline-change">Could move up one full range</div>
+                                    </div>
+                                    <div class="timeline-item">
+                                        <div class="timeline-period">12+ months</div>
+                                        <div class="timeline-change">Substantial improvements possible</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="quiz-section">
+                            <div class="quiz-question">
+                                <p><strong>Quick Check:</strong> If you have a 650 credit score, what range are you in and what's a realistic next goal?</p>
+                                <div class="quiz-options">
+                                    <label class="quiz-option">
+                                        <input type="radio" name="qRange" value="a">
+                                        <span>Fair range, aim for 670+ (Good)</span>
+                                    </label>
+                                    <label class="quiz-option">
+                                        <input type="radio" name="qRange" value="b">
+                                        <span>Good range, aim for 740+ (Very Good)</span>
+                                    </label>
+                                    <label class="quiz-option">
+                                        <input type="radio" name="qRange" value="c">
+                                        <span>Poor range, aim for 580+ (Fair)</span>
+                                    </label>
+                                </div>
+                                <button class="btn-check-answer" onclick="checkQuizAnswer('qRange', 'a')">Check Answer</button>
+                                <div class="quiz-feedback" id="qRange-feedback"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="lesson-summary">
+                            <h5>🎯 Key Takeaways</h5>
+                            <ul>
+                                <li>Each credit score range offers different benefits and challenges</li>
+                                <li>Higher scores can save thousands in interest over your lifetime</li>
+                                <li>Focus on payment history and low utilization to move up ranges</li>
+                                <li>Improvements take time - be patient and consistent</li>
+                                <li>Even small improvements in your score can make a big difference</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="lesson-navigation">
+                        <button class="btn-lesson-nav secondary" onclick="prevLessonStep()">← Back</button>
+                        <button class="btn-lesson-nav success" onclick="completeLesson('scoreRanges')">Complete Lesson ✓</button>
+                    </div>
+                </div>
+                
+                <button class="btn-continue" onclick="hideLesson()">Back to Lessons</button>
+            </div>
+            
+            <!-- 5 Factors That Affect Your Score Lesson -->
+            <div class="lesson-detail" id="ficoFactors">
+                <div class="lesson-header">
+                    <h3>📈 5 Factors That Affect Your Score</h3>
+                    <div class="lesson-progress-indicator">
+                        <span class="progress-step active" data-step="1">1</span>
+                        <span class="progress-step" data-step="2">2</span>
+                        <span class="progress-step" data-step="3">3</span>
+                        <span class="progress-step" data-step="4">4</span>
+                        <span class="progress-step" data-step="5">5</span>
+                        <span class="progress-step" data-step="6">6</span>
+                    </div>
+                </div>
+                
+                <!-- Lesson Step 1: Overview of the 5 Factors -->
+                <div class="lesson-step active" data-step="1">
+                    <div class="lesson-content">
+                        <h4>The Five Factors That Determine Your FICO Score</h4>
+                        <div class="concept-box">
+                            <h5>💡 Understanding the Formula</h5>
+                            <p>Your FICO score isn't random - it's calculated using five specific factors. Understanding these helps you focus your efforts on what matters most.</p>
+                        </div>
+                        
+                        <div class="factors-overview">
+                            <div class="factor-overview">
+                                <div class="factor-pie">
+                                    <div class="pie-segment payment-history" style="--percentage: 35"></div>
+                                    <div class="pie-segment utilization" style="--percentage: 30"></div>
+                                    <div class="pie-segment history-length" style="--percentage: 15"></div>
+                                    <div class="pie-segment new-credit" style="--percentage: 10"></div>
+                                    <div class="pie-segment credit-mix" style="--percentage: 10"></div>
+                                </div>
+                                <div class="factor-legend">
+                                    <div class="legend-item payment-history">
+                                        <span class="legend-color"></span>
+                                        <span class="legend-text">Payment History (35%)</span>
+                                    </div>
+                                    <div class="legend-item utilization">
+                                        <span class="legend-color"></span>
+                                        <span class="legend-text">Credit Utilization (30%)</span>
+                                    </div>
+                                    <div class="legend-item history-length">
+                                        <span class="legend-color"></span>
+                                        <span class="legend-text">Length of History (15%)</span>
+                                    </div>
+                                    <div class="legend-item new-credit">
+                                        <span class="legend-color"></span>
+                                        <span class="legend-text">New Credit (10%)</span>
+                                    </div>
+                                    <div class="legend-item credit-mix">
+                                        <span class="legend-color"></span>
+                                        <span class="legend-text">Credit Mix (10%)</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="priority-message">
+                                <h5>🎯 Focus Your Energy Wisely</h5>
+                                <p>The first two factors make up 65% of your score! Focus most of your effort on payment history and keeping balances low.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lesson-navigation">
+                        <button class="btn-lesson-nav" onclick="nextLessonStep()">Next →</button>
+                    </div>
+                </div>
+                
+                <!-- Lesson Step 2: Payment History (35%) -->
+                <div class="lesson-step" data-step="2">
+                    <div class="lesson-content">
+                        <h4>Factor #1: Payment History (35%)</h4>
+                        <div class="factor-deep-dive payment-history">
+                            <div class="factor-header">
+                                <div class="factor-percentage">35%</div>
+                                <div class="factor-title">
+                                    <h5>💳 Payment History</h5>
+                                    <p>Most Important Factor</p>
+                                </div>
+                            </div>
+                            
+                            <div class="factor-explanation">
+                                <h6>What It Measures:</h6>
+                                <p>Whether you pay your bills on time, every time. This includes credit cards, loans, mortgages, and sometimes even utility bills.</p>
+                                
+                                <h6>What Helps Your Score:</h6>
+                                <ul class="positive-actions">
+                                    <li>✅ Paying all bills by the due date</li>
+                                    <li>✅ Making at least minimum payments</li>
+                                    <li>✅ Paying off delinquent accounts</li>
+                                    <li>✅ Having no missed payments in your history</li>
+                                </ul>
+                                
+                                <h6>What Hurts Your Score:</h6>
+                                <ul class="negative-actions">
+                                    <li>❌ Late payments (even 1 day late counts)</li>
+                                    <li>❌ Missed payments</li>
+                                    <li>❌ Accounts sent to collections</li>
+                                    <li>❌ Bankruptcies or foreclosures</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="impact-timeline">
+                                <h6>How Long Late Payments Affect Your Score:</h6>
+                                <div class="timeline-impact">
+                                    <div class="impact-item">
+                                        <span class="time-period">30 days late</span>
+                                        <span class="impact-level severe">Major impact</span>
+                                    </div>
+                                    <div class="impact-item">
+                                        <span class="time-period">60 days late</span>
+                                        <span class="impact-level severe">Severe impact</span>
+                                    </div>
+                                    <div class="impact-item">
+                                        <span class="time-period">90+ days late</span>
+                                        <span class="impact-level catastrophic">Catastrophic impact</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="action-plan">
+                                <h6>💡 Action Plan:</h6>
+                                <div class="action-steps">
+                                    <div class="action-step">
+                                        <span class="step-number">1</span>
+                                        <span class="step-text">Set up automatic payments for at least the minimum amount</span>
+                                    </div>
+                                    <div class="action-step">
+                                        <span class="step-number">2</span>
+                                        <span class="step-text">Use calendar reminders for due dates</span>
+                                    </div>
+                                    <div class="action-step">
+                                        <span class="step-number">3</span>
+                                        <span class="step-text">Pay a few days early to avoid processing delays</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lesson-navigation">
+                        <button class="btn-lesson-nav secondary" onclick="prevLessonStep()">← Back</button>
+                        <button class="btn-lesson-nav" onclick="nextLessonStep()">Next →</button>
+                    </div>
+                </div>
+                
+                <!-- Lesson Step 3: Credit Utilization (30%) -->
+                <div class="lesson-step" data-step="3">
+                    <div class="lesson-content">
+                        <h4>Factor #2: Credit Utilization (30%)</h4>
+                        <div class="factor-deep-dive utilization">
+                            <div class="factor-header">
+                                <div class="factor-percentage">30%</div>
+                                <div class="factor-title">
+                                    <h5>📊 Credit Utilization</h5>
+                                    <p>Second Most Important</p>
+                                </div>
+                            </div>
+                            
+                            <div class="factor-explanation">
+                                <h6>What It Measures:</h6>
+                                <p>How much of your available credit you're using. If you have $1,000 credit limit and owe $300, your utilization is 30%.</p>
+                                
+                                <div class="utilization-visual">
+                                    <h6>Utilization Ranges & Impact:</h6>
+                                    <div class="utilization-ranges">
+                                        <div class="util-range excellent">
+                                            <div class="util-percentage">0-10%</div>
+                                            <div class="util-status">🌟 Excellent</div>
+                                            <div class="util-description">Ideal range - shows you don't rely heavily on credit</div>
+                                        </div>
+                                        <div class="util-range good">
+                                            <div class="util-percentage">11-30%</div>
+                                            <div class="util-status">✅ Good</div>
+                                            <div class="util-description">Acceptable range - still considered responsible use</div>
+                                        </div>
+                                        <div class="util-range fair">
+                                            <div class="util-percentage">31-50%</div>
+                                            <div class="util-status">⚠️ Fair</div>
+                                            <div class="util-description">Getting high - may indicate financial stress</div>
+                                        </div>
+                                        <div class="util-range poor">
+                                            <div class="util-percentage">51%+</div>
+                                            <div class="util-status">❌ Poor</div>
+                                            <div class="util-description">Too high - seriously hurts your score</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="utilization-calculator">
+                                    <h6>Try It: Calculate Your Utilization</h6>
+                                    <div class="calc-inputs">
+                                        <div class="calc-input">
+                                            <label>Credit Card Balance: $</label>
+                                            <input type="number" id="cardBalance" placeholder="300" onchange="calculateUtilization()">
+                                        </div>
+                                        <div class="calc-input">
+                                            <label>Credit Limit: $</label>
+                                            <input type="number" id="creditLimit" placeholder="1000" onchange="calculateUtilization()">
+                                        </div>
+                                        <div class="calc-result" id="utilizationResult">
+                                            <strong>Your Utilization: <span id="utilPercentage">0%</span></strong>
+                                            <div id="utilStatus"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="action-plan">
+                                <h6>💡 Quick Improvement Strategies:</h6>
+                                <div class="strategy-list">
+                                    <div class="strategy-item">
+                                        <span class="strategy-icon">💳</span>
+                                        <span class="strategy-text">Pay down existing balances</span>
+                                    </div>
+                                    <div class="strategy-item">
+                                        <span class="strategy-icon">📅</span>
+                                        <span class="strategy-text">Make multiple payments per month</span>
+                                    </div>
+                                    <div class="strategy-item">
+                                        <span class="strategy-icon">📞</span>
+                                        <span class="strategy-text">Request credit limit increases</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lesson-navigation">
+                        <button class="btn-lesson-nav secondary" onclick="prevLessonStep()">← Back</button>
+                        <button class="btn-lesson-nav" onclick="nextLessonStep()">Next →</button>
+                    </div>
+                </div>
+                
+                <!-- Lesson Step 4: Length of Credit History (15%) -->
+                <div class="lesson-step" data-step="4">
+                    <div class="lesson-content">
+                        <h4>Factor #3: Length of Credit History (15%)</h4>
+                        <div class="factor-deep-dive history-length">
+                            <div class="factor-header">
+                                <div class="factor-percentage">15%</div>
+                                <div class="factor-title">
+                                    <h5>📅 Length of Credit History</h5>
+                                    <p>Time Builds Trust</p>
+                                </div>
+                            </div>
+                            
+                            <div class="factor-explanation">
+                                <h6>What It Measures:</h6>
+                                <ul>
+                                    <li>How long you've had credit accounts</li>
+                                    <li>Age of your oldest account</li>
+                                    <li>Average age of all your accounts</li>
+                                    <li>How long since you last used certain accounts</li>
+                                </ul>
+                                
+                                <div class="history-timeline">
+                                    <h6>Credit History Timeline:</h6>
+                                    <div class="timeline-ages">
+                                        <div class="age-item">
+                                            <div class="age-period">0-2 years</div>
+                                            <div class="age-status limited">Limited History</div>
+                                            <div class="age-description">Building foundation</div>
+                                        </div>
+                                        <div class="age-item">
+                                            <div class="age-period">2-5 years</div>
+                                            <div class="age-status fair">Fair History</div>
+                                            <div class="age-description">Establishing patterns</div>
+                                        </div>
+                                        <div class="age-item">
+                                            <div class="age-period">5-10 years</div>
+                                            <div class="age-status good">Good History</div>
+                                            <div class="age-description">Strong foundation</div>
+                                        </div>
+                                        <div class="age-item">
+                                            <div class="age-period">10+ years</div>
+                                            <div class="age-status excellent">Excellent History</div>
+                                            <div class="age-description">Deep trust built</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="important-note">
+                                    <h6>⚠️ Important: Don't Close Old Cards!</h6>
+                                    <p>Your oldest account is valuable for your score. Even if you don't use an old credit card, keep it open to maintain your credit history length.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="action-plan">
+                                <h6>💡 Strategies for This Factor:</h6>
+                                <div class="strategy-list">
+                                    <div class="strategy-item">
+                                        <span class="strategy-icon">🔒</span>
+                                        <span class="strategy-text">Keep old accounts open (even if unused)</span>
+                                    </div>
+                                    <div class="strategy-item">
+                                        <span class="strategy-icon">💳</span>
+                                        <span class="strategy-text">Make small purchases on old cards occasionally</span>
+                                    </div>
+                                    <div class="strategy-item">
+                                        <span class="strategy-icon">⏳</span>
+                                        <span class="strategy-text">Be patient - this factor improves with time</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lesson-navigation">
+                        <button class="btn-lesson-nav secondary" onclick="prevLessonStep()">← Back</button>
+                        <button class="btn-lesson-nav" onclick="nextLessonStep()">Next →</button>
+                    </div>
+                </div>
+                
+                <!-- Lesson Step 5: New Credit & Credit Mix (10% each) -->
+                <div class="lesson-step" data-step="5">
+                    <div class="lesson-content">
+                        <h4>Factors #4 & #5: New Credit & Credit Mix (10% each)</h4>
+                        
+                        <div class="dual-factors">
+                            <div class="factor-deep-dive new-credit">
+                                <div class="factor-header">
+                                    <div class="factor-percentage">10%</div>
+                                    <div class="factor-title">
+                                        <h5>🆕 New Credit</h5>
+                                        <p>Recent Account Activity</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="factor-explanation">
+                                    <h6>What It Measures:</h6>
+                                    <ul>
+                                        <li>How many new accounts you've opened recently</li>
+                                        <li>Number of recent credit inquiries</li>
+                                        <li>Time since you opened new accounts</li>
+                                    </ul>
+                                    
+                                    <div class="inquiry-types">
+                                        <div class="inquiry-type soft">
+                                            <h6>Soft Inquiries (Don't Hurt Score):</h6>
+                                            <ul>
+                                                <li>Checking your own credit</li>
+                                                <li>Pre-approved credit offers</li>
+                                                <li>Employment background checks</li>
+                                            </ul>
+                                        </div>
+                                        <div class="inquiry-type hard">
+                                            <h6>Hard Inquiries (Can Lower Score):</h6>
+                                            <ul>
+                                                <li>Applying for credit cards</li>
+                                                <li>Applying for auto loans</li>
+                                                <li>Applying for mortgages</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="tip-box">
+                                        <h6>💡 Smart Shopping Tip:</h6>
+                                        <p>Multiple inquiries for the same type of loan (like auto or mortgage) within 14-45 days usually count as just one inquiry.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="factor-deep-dive credit-mix">
+                                <div class="factor-header">
+                                    <div class="factor-percentage">10%</div>
+                                    <div class="factor-title">
+                                        <h5>🔄 Credit Mix</h5>
+                                        <p>Variety of Credit Types</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="factor-explanation">
+                                    <h6>What It Measures:</h6>
+                                    <p>The variety of credit accounts you manage successfully.</p>
+                                    
+                                    <div class="credit-types-mix">
+                                        <div class="credit-category revolving">
+                                            <h6>Revolving Credit:</h6>
+                                            <ul>
+                                                <li>Credit cards</li>
+                                                <li>Home equity lines of credit</li>
+                                                <li>Store credit cards</li>
+                                            </ul>
+                                        </div>
+                                        <div class="credit-category installment">
+                                            <h6>Installment Credit:</h6>
+                                            <ul>
+                                                <li>Auto loans</li>
+                                                <li>Student loans</li>
+                                                <li>Personal loans</li>
+                                                <li>Mortgages</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mix-guidance">
+                                        <h6>⚠️ Don't Chase Credit Mix</h6>
+                                        <p>While having different types of credit can help, don't take on debt you don't need just to improve your credit mix. Focus on the bigger factors first!</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lesson-navigation">
+                        <button class="btn-lesson-nav secondary" onclick="prevLessonStep()">← Back</button>
+                        <button class="btn-lesson-nav" onclick="nextLessonStep()">Next →</button>
+                    </div>
+                </div>
+                
+                <!-- Lesson Step 6: Action Plan & Quiz -->
+                <div class="lesson-step" data-step="6">
+                    <div class="lesson-content">
+                        <h4>Your Action Plan: Focus on What Matters Most</h4>
+                        
+                        <div class="priority-action-plan">
+                            <div class="priority-level high">
+                                <h5>🔥 High Priority (65% of your score)</h5>
+                                <div class="priority-actions">
+                                    <div class="priority-action">
+                                        <span class="action-title">Perfect Payment History</span>
+                                        <span class="action-detail">Set up automatic payments, pay on time every month</span>
+                                    </div>
+                                    <div class="priority-action">
+                                        <span class="action-title">Low Credit Utilization</span>
+                                        <span class="action-detail">Keep balances under 30%, ideally under 10%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="priority-level medium">
+                                <h5>⚡ Medium Priority (15% of your score)</h5>
+                                <div class="priority-actions">
+                                    <div class="priority-action">
+                                        <span class="action-title">Maintain Credit History</span>
+                                        <span class="action-detail">Keep old accounts open, be patient</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="priority-level low">
+                                <h5>💡 Lower Priority (20% of your score)</h5>
+                                <div class="priority-actions">
+                                    <div class="priority-action">
+                                        <span class="action-title">Limit New Credit Applications</span>
+                                        <span class="action-detail">Only apply when needed, space out applications</span>
+                                    </div>
+                                    <div class="priority-action">
+                                        <span class="action-title">Natural Credit Mix</span>
+                                        <span class="action-detail">Don't force it - let it develop naturally over time</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="quiz-section">
+                            <div class="quiz-question">
+                                <p><strong>Knowledge Check:</strong> Which two factors make up 65% of your FICO score?</p>
+                                <div class="quiz-options">
+                                    <label class="quiz-option">
+                                        <input type="radio" name="qFactors" value="a">
+                                        <span>Payment history and credit utilization</span>
+                                    </label>
+                                    <label class="quiz-option">
+                                        <input type="radio" name="qFactors" value="b">
+                                        <span>Credit mix and length of credit history</span>
+                                    </label>
+                                    <label class="quiz-option">
+                                        <input type="radio" name="qFactors" value="c">
+                                        <span>New credit and payment history</span>
+                                    </label>
+                                </div>
+                                <button class="btn-check-answer" onclick="checkQuizAnswer('qFactors', 'a')">Check Answer</button>
+                                <div class="quiz-feedback" id="qFactors-feedback"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="lesson-summary">
+                            <h5>🎯 Key Takeaways</h5>
+                            <ul>
+                                <li>Payment history (35%) and credit utilization (30%) are most important</li>
+                                <li>Focus your energy on paying bills on time and keeping balances low</li>
+                                <li>Length of credit history rewards patience - keep old accounts open</li>
+                                <li>New credit and credit mix are less important but still matter</li>
+                                <li>Don't take on debt you don't need just to improve your credit mix</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="lesson-navigation">
+                        <button class="btn-lesson-nav secondary" onclick="prevLessonStep()">← Back</button>
+                        <button class="btn-lesson-nav success" onclick="completeLesson('ficoFactors')">Complete Lesson ✓</button>
+                    </div>
+                </div>
+                
+                <button class="btn-continue" onclick="hideLesson()">Back to Lessons</button>
+            </div>
+            
+            <!-- Credit vs Debit Cards Lesson -->
+            <div class="lesson-detail" id="creditVsDebit">
+                <div class="lesson-header">
+                    <h3>💳 Credit vs Debit Cards</h3>
+                    <div class="lesson-progress-indicator">
+                        <span class="progress-step active" data-step="1">1</span>
+                        <span class="progress-step" data-step="2">2</span>
+                        <span class="progress-step" data-step="3">3</span>
+                        <span class="progress-step" data-step="4">4</span>
+                    </div>
+                </div>
+                
+                <!-- Lesson Step 1: How Each Card Works -->
+                <div class="lesson-step active" data-step="1">
+                    <div class="lesson-content">
+                        <h4>How Credit and Debit Cards Work</h4>
+                        <div class="concept-box">
+                            <h5>💡 The Basic Difference</h5>
+                            <p>Both cards look similar and work at most places, but they handle your money very differently.</p>
+                        </div>
+                        
+                        <div class="card-comparison">
+                            <div class="card-explanation debit">
+                                <div class="card-header">
+                                    <div class="card-icon">🏦</div>
+                                    <h5>Debit Cards</h5>
+                                    <p>Your Own Money</p>
+                                </div>
+                                <div class="card-details">
+                                    <h6>How it works:</h6>
+                                    <ul>
+                                        <li>Connected to your checking account</li>
+                                        <li>Uses money you already have</li>
+                                        <li>Transactions happen immediately</li>
+                                        <li>When you spend $50, $50 leaves your account right away</li>
+                                    </ul>
+                                    
+                                    <div class="example-transaction">
+                                        <h6>Example Transaction:</h6>
+                                        <div class="transaction-flow">
+                                            <div class="step">1. You have $500 in your account</div>
+                                            <div class="step">2. You buy groceries for $100</div>
+                                            <div class="step">3. Now you have $400 in your account</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="card-explanation credit">
+                                <div class="card-header">
+                                    <div class="card-icon">💳</div>
+                                    <h5>Credit Cards</h5>
+                                    <p>Borrowed Money</p>
+                                </div>
+                                <div class="card-details">
+                                    <h6>How it works:</h6>
+                                    <ul>
+                                        <li>Connected to a line of credit</li>
+                                        <li>Uses money lent by the bank</li>
+                                        <li>You pay the bank back later</li>
+                                        <li>When you spend $50, you owe the bank $50</li>
+                                    </ul>
+                                    
+                                    <div class="example-transaction">
+                                        <h6>Example Transaction:</h6>
+                                        <div class="transaction-flow">
+                                            <div class="step">1. You have $1000 credit limit</div>
+                                            <div class="step">2. You buy groceries for $100</div>
+                                            <div class="step">3. You owe the bank $100, $900 credit left</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="key-insight">
+                            <h5>🎯 Key Insight</h5>
+                            <p>Debit cards spend your money. Credit cards create debt that you must pay back, usually with interest if you don't pay in full.</p>
+                        </div>
+                    </div>
+                    <div class="lesson-navigation">
+                        <button class="btn-lesson-nav" onclick="nextLessonStep()">Next →</button>
+                    </div>
+                </div>
+                
+                <!-- Lesson Step 2: Pros and Cons -->
+                <div class="lesson-step" data-step="2">
+                    <div class="lesson-content">
+                        <h4>Advantages and Disadvantages</h4>
+                        
+                        <div class="pros-cons-comparison">
+                            <div class="pros-cons-section debit">
+                                <h5>🏦 Debit Cards</h5>
+                                <div class="pros-cons-grid">
+                                    <div class="pros">
+                                        <h6>✅ Advantages</h6>
+                                        <ul>
+                                            <li>Can't overspend (limited by account balance)</li>
+                                            <li>No interest charges</li>
+                                            <li>No monthly bills to track</li>
+                                            <li>Easy to get (just need a bank account)</li>
+                                            <li>Helps control spending naturally</li>
+                                            <li>ATM access for cash</li>
+                                        </ul>
+                                    </div>
+                                    <div class="cons">
+                                        <h6>❌ Disadvantages</h6>
+                                        <ul>
+                                            <li>Doesn't build credit history</li>
+                                            <li>Less fraud protection</li>
+                                            <li>Overdraft fees if you overspend</li>
+                                            <li>Limited dispute resolution</li>
+                                            <li>No purchase rewards/cash back</li>
+                                            <li>Hard to rent cars or hotels</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="pros-cons-section credit">
+                                <h5>💳 Credit Cards</h5>
+                                <div class="pros-cons-grid">
+                                    <div class="pros">
+                                        <h6>✅ Advantages</h6>
+                                        <ul>
+                                            <li>Builds credit history and score</li>
+                                            <li>Strong fraud protection</li>
+                                            <li>Purchase rewards and cash back</li>
+                                            <li>Extended warranties on purchases</li>
+                                            <li>Emergency money when needed</li>
+                                            <li>Better for car rentals and hotels</li>
+                                            <li>Grace period for payments</li>
+                                        </ul>
+                                    </div>
+                                    <div class="cons">
+                                        <h6>❌ Disadvantages</h6>
+                                        <ul>
+                                            <li>Easy to overspend and get into debt</li>
+                                            <li>High interest rates (15-25%+ APR)</li>
+                                            <li>Monthly bills to manage</li>
+                                            <li>Can hurt credit if misused</li>
+                                            <li>Annual fees on some cards</li>
+                                            <li>Temptation to spend money you don't have</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="comparison-scenarios">
+                            <h5>📋 When to Use Each Card</h5>
+                            <div class="scenario-grid">
+                                <div class="scenario-item good-for-debit">
+                                    <h6>👍 Better for Debit Cards:</h6>
+                                    <ul>
+                                        <li>ATM cash withdrawals</li>
+                                        <li>When you're learning to budget</li>
+                                        <li>Small everyday purchases</li>
+                                        <li>When you want to avoid debt</li>
+                                    </ul>
+                                </div>
+                                <div class="scenario-item good-for-credit">
+                                    <h6>👍 Better for Credit Cards:</h6>
+                                    <ul>
+                                        <li>Online purchases</li>
+                                        <li>Large purchases (with good plan to pay off)</li>
+                                        <li>Travel expenses</li>
+                                        <li>Building credit history</li>
+                                        <li>Emergency situations</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lesson-navigation">
+                        <button class="btn-lesson-nav secondary" onclick="prevLessonStep()">← Back</button>
+                        <button class="btn-lesson-nav" onclick="nextLessonStep()">Next →</button>
+                    </div>
+                </div>
+                
+                <!-- Lesson Step 3: Smart Credit Card Use -->
+                <div class="lesson-step" data-step="3">
+                    <div class="lesson-content">
+                        <h4>How to Use Credit Cards Responsibly</h4>
+                        <div class="responsibility-guide">
+                            <div class="golden-rules">
+                                <h5>🏆 The Golden Rules of Credit Cards</h5>
+                                <div class="rules-list">
+                                    <div class="rule-item">
+                                        <div class="rule-number">1</div>
+                                        <div class="rule-content">
+                                            <h6>Only Spend What You Can Afford</h6>
+                                            <p>Before using your credit card, ask: "Do I have this money in my bank account to pay this off?"</p>
+                                        </div>
+                                    </div>
+                                    <div class="rule-item">
+                                        <div class="rule-number">2</div>
+                                        <div class="rule-content">
+                                            <h6>Pay Your Full Balance Every Month</h6>
+                                            <p>This avoids interest charges and builds excellent credit history.</p>
+                                        </div>
+                                    </div>
+                                    <div class="rule-item">
+                                        <div class="rule-number">3</div>
+                                        <div class="rule-content">
+                                            <h6>Keep Utilization Low</h6>
+                                            <p>Use less than 30% of your credit limit, ideally under 10%.</p>
+                                        </div>
+                                    </div>
+                                    <div class="rule-item">
+                                        <div class="rule-number">4</div>
+                                        <div class="rule-content">
+                                            <h6>Always Pay At Least the Minimum</h6>
+                                            <p>Late payments hurt your credit score more than anything else.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="credit-card-mistakes">
+                                <h5>⚠️ Common Credit Card Mistakes to Avoid</h5>
+                                <div class="mistakes-grid">
+                                    <div class="mistake-item">
+                                        <div class="mistake-icon">💸</div>
+                                        <h6>Making Only Minimum Payments</h6>
+                                        <p>A $1,000 balance at 18% APR takes 5+ years to pay off with minimums only!</p>
+                                    </div>
+                                    <div class="mistake-item">
+                                        <div class="mistake-icon">🛍️</div>
+                                        <h6>Using Credit for Lifestyle Inflation</h6>
+                                        <p>Don't use credit to live beyond your means or buy things you can't afford.</p>
+                                    </div>
+                                    <div class="mistake-item">
+                                        <div class="mistake-icon">💳</div>
+                                        <h6>Maxing Out Credit Cards</h6>
+                                        <p>High utilization hurts your credit score and makes it hard to pay off balances.</p>
+                                    </div>
+                                    <div class="mistake-item">
+                                        <div class="mistake-icon">📅</div>
+                                        <h6>Missing Payment Due Dates</h6>
+                                        <p>Late payments can cost $25-40 in fees plus damage to your credit score.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="smart-strategies">
+                                <h5>🧠 Smart Credit Card Strategies</h5>
+                                <div class="strategy-list">
+                                    <div class="strategy-item">
+                                        <span class="strategy-icon">🤖</span>
+                                        <div class="strategy-content">
+                                            <h6>Set Up Automatic Payments</h6>
+                                            <p>Automate at least the minimum payment to avoid late fees and credit damage.</p>
+                                        </div>
+                                    </div>
+                                    <div class="strategy-item">
+                                        <span class="strategy-icon">📱</span>
+                                        <div class="strategy-content">
+                                            <h6>Track Spending with Apps</h6>
+                                            <p>Use your bank's app or budgeting apps to monitor credit card spending in real time.</p>
+                                        </div>
+                                    </div>
+                                    <div class="strategy-item">
+                                        <span class="strategy-icon">💰</span>
+                                        <div class="strategy-content">
+                                            <h6>Treat Credit Like Debit</h6>
+                                            <p>Only use your credit card if you have the money in your checking account to pay for it.</p>
+                                        </div>
+                                    </div>
+                                    <div class="strategy-item">
+                                        <span class="strategy-icon">🎁</span>
+                                        <div class="strategy-content">
+                                            <h6>Maximize Rewards Responsibly</h6>
+                                            <p>Earn cash back and points, but never spend more just to get rewards.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lesson-navigation">
+                        <button class="btn-lesson-nav secondary" onclick="prevLessonStep()">← Back</button>
+                        <button class="btn-lesson-nav" onclick="nextLessonStep()">Next →</button>
+                    </div>
+                </div>
+                
+                <!-- Lesson Step 4: Making the Right Choice & Quiz -->
+                <div class="lesson-step" data-step="4">
+                    <div class="lesson-content">
+                        <h4>Which Card Should You Choose?</h4>
+                        
+                        <div class="decision-framework">
+                            <h5>🤔 Ask Yourself These Questions</h5>
+                            <div class="decision-questions">
+                                <div class="question-item">
+                                    <h6>1. Am I good at managing money and paying bills on time?</h6>
+                                    <div class="answer-guidance">
+                                        <span class="answer yes">✅ Yes → Credit card can be beneficial</span>
+                                        <span class="answer no">❌ No → Start with debit card, build habits first</span>
+                                    </div>
+                                </div>
+                                <div class="question-item">
+                                    <h6>2. Do I have a steady income?</h6>
+                                    <div class="answer-guidance">
+                                        <span class="answer yes">✅ Yes → Credit card is safer</span>
+                                        <span class="answer no">❌ No → Debit card reduces risk</span>
+                                    </div>
+                                </div>
+                                <div class="question-item">
+                                    <h6>3. Do I need to build credit history?</h6>
+                                    <div class="answer-guidance">
+                                        <span class="answer yes">✅ Yes → Credit card is necessary</span>
+                                        <span class="answer no">❌ Not yet → Debit card is fine for now</span>
+                                    </div>
+                                </div>
+                                <div class="question-item">
+                                    <h6>4. Can I resist the temptation to overspend?</h6>
+                                    <div class="answer-guidance">
+                                        <span class="answer yes">✅ Yes → Credit card with discipline</span>
+                                        <span class="answer no">❌ No → Debit card for natural limits</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="recommendations">
+                            <h5>💡 Our Recommendations by Life Stage</h5>
+                            <div class="life-stage-recommendations">
+                                <div class="stage-recommendation">
+                                    <h6>🎓 High School Students</h6>
+                                    <p><strong>Start with:</strong> Debit card + secured credit card</p>
+                                    <p>Learn money management with debit, build credit slowly with a secured card.</p>
+                                </div>
+                                <div class="stage-recommendation">
+                                    <h6>🎓 College Students</h6>
+                                    <p><strong>Best choice:</strong> Student credit card + debit card</p>
+                                    <p>Use credit for specific purchases, debit for daily spending. Build credit responsibly.</p>
+                                </div>
+                                <div class="stage-recommendation">
+                                    <h6>💼 Working Adults</h6>
+                                    <p><strong>Ideal setup:</strong> 1-2 credit cards + debit card</p>
+                                    <p>Use credit strategically for rewards and credit building, maintain emergency access with debit.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="quiz-section">
+                            <div class="quiz-question">
+                                <p><strong>Scenario Check:</strong> Sarah is a college student with a part-time job. She's good at budgeting but has no credit history. She wants to start building credit. What should she do?</p>
+                                <div class="quiz-options">
+                                    <label class="quiz-option">
+                                        <input type="radio" name="qScenario" value="a">
+                                        <span>Get only a debit card to avoid debt risk</span>
+                                    </label>
+                                    <label class="quiz-option">
+                                        <input type="radio" name="qScenario" value="b">
+                                        <span>Get a student credit card and use it responsibly for small purchases</span>
+                                    </label>
+                                    <label class="quiz-option">
+                                        <input type="radio" name="qScenario" value="c">
+                                        <span>Get multiple credit cards to build credit faster</span>
+                                    </label>
+                                </div>
+                                <button class="btn-check-answer" onclick="checkQuizAnswer('qScenario', 'b')">Check Answer</button>
+                                <div class="quiz-feedback" id="qScenario-feedback"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="lesson-summary">
+                            <h5>🎯 Key Takeaways</h5>
+                            <ul>
+                                <li>Debit cards use your own money; credit cards use borrowed money</li>
+                                <li>Credit cards can build credit but require discipline to avoid debt</li>
+                                <li>Pay credit card balances in full every month to avoid interest</li>
+                                <li>Start with whichever card matches your current money management skills</li>
+                                <li>You can (and should) use both types of cards strategically</li>
+                                <li>Building credit history is important for your financial future</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="lesson-navigation">
+                        <button class="btn-lesson-nav secondary" onclick="prevLessonStep()">← Back</button>
+                        <button class="btn-lesson-nav success" onclick="completeLesson('creditVsDebit')">Complete Lesson ✓</button>
+                    </div>
+                </div>
+                
+                <button class="btn-continue" onclick="hideLesson()">Back to Lessons</button>
+            </div>
+            
+            <!-- Budget Basics Lesson -->
+            <div class="lesson-detail" id="budgetBasics">
+                <div class="lesson-header">
+                    <h3>💰 Income vs Expenses</h3>
+                    <div class="lesson-progress-indicator">
+                        <span class="progress-step active" data-step="1">1</span>
+                        <span class="progress-step" data-step="2">2</span>
+                        <span class="progress-step" data-step="3">3</span>
+                        <span class="progress-step" data-step="4">4</span>
+                    </div>
+                </div>
+                
+                <!-- Step 1: Understanding Income -->
+                <div class="lesson-step active" data-step="1">
+                    <div class="lesson-content">
+                        <h4>What is Income?</h4>
+                        <div class="concept-box">
+                            <h5>💡 Income Definition</h5>
+                            <p><strong>Income</strong> is all the money you receive regularly, including wages, tips, gifts, and any other sources of money coming in.</p>
+                        </div>
+                        
+                        <div class="income-types">
+                            <div class="type-card">
+                                <h5>💼 Primary Income</h5>
+                                <p>Your main job or salary - the most reliable source</p>
+                            </div>
+                            <div class="type-card">
+                                <h5>💰 Secondary Income</h5>
+                                <p>Part-time work, freelancing, side hustles</p>
+                            </div>
+                            <div class="type-card">
+                                <h5>🎁 Other Income</h5>
+                                <p>Gifts, allowances, investment returns</p>
+                            </div>
+                        </div>
+                        
+                        <div class="example-box">
+                            <h5>🌟 Student Example</h5>
+                            <p>Sarah works part-time earning $800/month, gets $200 allowance from parents, and made $50 selling old textbooks = $1,050 total monthly income</p>
+                        </div>
+                    </div>
+                    <div class="lesson-navigation">
+                        <button class="btn-lesson-nav" onclick="nextLessonStep()">Next →</button>
+                    </div>
+                </div>
+                
+                <!-- Step 2: Understanding Expenses -->
+                <div class="lesson-step" data-step="2">
+                    <div class="lesson-content">
+                        <h4>What are Expenses?</h4>
+                        <div class="concept-box">
+                            <h5>💡 Expenses Definition</h5>
+                            <p><strong>Expenses</strong> are all the money you spend. They fall into two main categories: needs and wants.</p>
+                        </div>
+                        
+                        <div class="expense-categories">
+                            <div class="category-section">
+                                <h5>🏠 Needs (Essential Expenses)</h5>
+                                <ul>
+                                    <li>Housing (rent, utilities)</li>
+                                    <li>Food (groceries, not dining out)</li>
+                                    <li>Transportation (gas, bus passes)</li>
+                                    <li>Healthcare</li>
+                                    <li>Minimum debt payments</li>
+                                </ul>
+                            </div>
+                            <div class="category-section">
+                                <h5>🎮 Wants (Discretionary Expenses)</h5>
+                                <ul>
+                                    <li>Entertainment (movies, games)</li>
+                                    <li>Dining out</li>
+                                    <li>Shopping (clothes, gadgets)</li>
+                                    <li>Hobbies and subscriptions</li>
+                                    <li>Travel and vacations</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lesson-navigation">
+                        <button class="btn-lesson-nav secondary" onclick="prevLessonStep()">← Back</button>
+                        <button class="btn-lesson-nav" onclick="nextLessonStep()">Next →</button>
+                    </div>
+                </div>
+                
+                <!-- Step 3: The Balance -->
+                <div class="lesson-step" data-step="3">
+                    <div class="lesson-content">
+                        <h4>Income vs Expenses: The Golden Rule</h4>
+                        <div class="balance-visual">
+                            <div class="balance-scale">
+                                <div class="scale-side income-side">
+                                    <h5>Income</h5>
+                                    <div class="money-icon">💰</div>
+                                </div>
+                                <div class="scale-center">⚖️</div>
+                                <div class="scale-side expense-side">
+                                    <h5>Expenses</h5>
+                                    <div class="money-icon">💸</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="balance-scenarios">
+                            <div class="scenario good">
+                                <h5>✅ Healthy Finances</h5>
+                                <p><strong>Income > Expenses:</strong> You have money left over to save and invest</p>
+                            </div>
+                            <div class="scenario neutral">
+                                <h5>⚠️ Breaking Even</h5>
+                                <p><strong>Income = Expenses:</strong> You're getting by, but no safety net</p>
+                            </div>
+                            <div class="scenario bad">
+                                <h5>❌ Overspending</h5>
+                                <p><strong>Income < Expenses:</strong> You're going into debt or using savings</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lesson-navigation">
+                        <button class="btn-lesson-nav secondary" onclick="prevLessonStep()">← Back</button>
+                        <button class="btn-lesson-nav" onclick="nextLessonStep()">Next →</button>
+                    </div>
+                </div>
+                
+                <!-- Step 4: Practice Exercise -->
+                <div class="lesson-step" data-step="4">
+                    <div class="lesson-content">
+                        <h4>Quick Practice</h4>
+                        <div class="practice-exercise">
+                            <p><strong>Scenario:</strong> Alex is a college student. Help categorize their monthly money:</p>
+                            
+                            <div class="categorization-game">
+                                <div class="money-items">
+                                    <div class="money-item" draggable="true">$600 - Part-time job</div>
+                                    <div class="money-item" draggable="true">$300 - Rent</div>
+                                    <div class="money-item" draggable="true">$150 - Groceries</div>
+                                    <div class="money-item" draggable="true">$100 - Entertainment</div>
+                                    <div class="money-item" draggable="true">$50 - Phone bill</div>
+                                </div>
+                                
+                                <div class="categorization-boxes">
+                                    <div class="category-box" id="income-box">
+                                        <h5>Income</h5>
+                                        <div class="drop-zone"></div>
+                                    </div>
+                                    <div class="category-box" id="needs-box">
+                                        <h5>Needs</h5>
+                                        <div class="drop-zone"></div>
+                                    </div>
+                                    <div class="category-box" id="wants-box">
+                                        <h5>Wants</h5>
+                                        <div class="drop-zone"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="calculation-result" id="budgetResult">
+                                <p>Income: $<span id="totalIncome">0</span></p>
+                                <p>Expenses: $<span id="totalExpenses">0</span></p>
+                                <p>Leftover: $<span id="leftover">0</span></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lesson-navigation">
+                        <button class="btn-lesson-nav secondary" onclick="prevLessonStep()">← Back</button>
+                        <button class="btn-lesson-nav success" onclick="completeLesson('budgetBasics')">Complete Lesson ✓</button>
+                    </div>
+                </div>
+                
+                <button class="btn-continue" onclick="hideLesson()">Back to Lessons</button>
+            </div>
+            
+            <!-- Creating Your First Budget Lesson -->
+            <div class="lesson-detail" id="firstBudget">
+                <div class="lesson-header">
+                    <h3>📝 Creating Your First Budget</h3>
+                    <div class="lesson-progress-indicator">
+                        <span class="progress-step active" data-step="1">1</span>
+                        <span class="progress-step" data-step="2">2</span>
+                        <span class="progress-step" data-step="3">3</span>
+                        <span class="progress-step" data-step="4">4</span>
+                        <span class="progress-step" data-step="5">5</span>
+                    </div>
+                </div>
+                
+                <!-- Step 1: Why Budget -->
+                <div class="lesson-step active" data-step="1">
+                    <div class="lesson-content">
+                        <h4>Why Do You Need a Budget?</h4>
+                        <div class="concept-box">
+                            <h5>💡 Budget Purpose</h5>
+                            <p>A budget is your spending plan - it helps you decide how to use your money before you spend it.</p>
+                        </div>
+                        
+                        <div class="benefits-grid">
+                            <div class="benefit-item">
+                                <div class="benefit-icon">🎯</div>
+                                <h5>Reach Goals</h5>
+                                <p>Save for things you want</p>
+                            </div>
+                            <div class="benefit-item">
+                                <div class="benefit-icon">🛡️</div>
+                                <h5>Avoid Debt</h5>
+                                <p>Don't spend more than you have</p>
+                            </div>
+                            <div class="benefit-item">
+                                <div class="benefit-icon">😌</div>
+                                <h5>Reduce Stress</h5>
+                                <p>Know where your money goes</p>
+                            </div>
+                            <div class="benefit-item">
+                                <div class="benefit-icon">🏆</div>
+                                <h5>Build Wealth</h5>
+                                <p>Make your money work for you</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lesson-navigation">
+                        <button class="btn-lesson-nav" onclick="nextLessonStep()">Next →</button>
+                    </div>
+                </div>
+                
+                <!-- Step 2: Gather Information -->
+                <div class="lesson-step" data-step="2">
+                    <div class="lesson-content">
+                        <h4>Step 1: Gather Your Information</h4>
+                        <p>Before creating a budget, you need to know your financial situation:</p>
+                        
+                        <div class="info-checklist">
+                            <div class="checklist-section">
+                                <h5>📊 Income Information</h5>
+                                <ul class="checklist">
+                                    <li>Last 3 months of pay stubs</li>
+                                    <li>Bank statements</li>
+                                    <li>Any other income sources</li>
+                                    <li>Calculate your average monthly income</li>
+                                </ul>
+                            </div>
+                            <div class="checklist-section">
+                                <h5>💳 Expense Information</h5>
+                                <ul class="checklist">
+                                    <li>Bank and credit card statements</li>
+                                    <li>Bills and receipts</li>
+                                    <li>Track spending for 1-2 weeks</li>
+                                    <li>Categorize all expenses</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="tip-box">
+                            <h5>💡 Pro Tip</h5>
+                            <p>Use your phone to take photos of receipts, or check your banking app to see recent transactions!</p>
+                        </div>
+                    </div>
+                    <div class="lesson-navigation">
+                        <button class="btn-lesson-nav secondary" onclick="prevLessonStep()">← Back</button>
+                        <button class="btn-lesson-nav" onclick="nextLessonStep()">Next →</button>
+                    </div>
+                </div>
+                
+                <!-- Step 3: Choose a Method -->
+                <div class="lesson-step" data-step="3">
+                    <div class="lesson-content">
+                        <h4>Step 2: Choose Your Budget Method</h4>
+                        <p>There are several ways to budget. Pick what works for you:</p>
+                        
+                        <div class="budget-methods">
+                            <div class="method-card">
+                                <h5>📱 App-Based</h5>
+                                <p><strong>Best for:</strong> Tech-savvy users</p>
+                                <p>Apps like Mint, YNAB, or PocketGuard automatically track spending</p>
+                                <div class="pros-cons">
+                                    <span class="pro">✅ Automatic</span>
+                                    <span class="con">❌ May cost money</span>
+                                </div>
+                            </div>
+                            <div class="method-card">
+                                <h5>📊 Spreadsheet</h5>
+                                <p><strong>Best for:</strong> Detail-oriented people</p>
+                                <p>Use Excel, Google Sheets, or Numbers to create custom budgets</p>
+                                <div class="pros-cons">
+                                    <span class="pro">✅ Customizable</span>
+                                    <span class="con">❌ Manual work</span>
+                                </div>
+                            </div>
+                            <div class="method-card">
+                                <h5>📝 Pen & Paper</h5>
+                                <p><strong>Best for:</strong> Simple approach lovers</p>
+                                <p>Write down income and expenses in a notebook</p>
+                                <div class="pros-cons">
+                                    <span class="pro">✅ Simple</span>
+                                    <span class="con">❌ Easy to lose</span>
+                                </div>
+                            </div>
+                            <div class="method-card">
+                                <h5>💳 Envelope Method</h5>
+                                <p><strong>Best for:</strong> Cash users</p>
+                                <p>Put cash for each category in separate envelopes</p>
+                                <div class="pros-cons">
+                                    <span class="pro">✅ Visual limits</span>
+                                    <span class="con">❌ Cash-only</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lesson-navigation">
+                        <button class="btn-lesson-nav secondary" onclick="prevLessonStep()">← Back</button>
+                        <button class="btn-lesson-nav" onclick="nextLessonStep()">Next →</button>
+                    </div>
+                </div>
+                
+                <!-- Step 4: Create Categories -->
+                <div class="lesson-step" data-step="4">
+                    <div class="lesson-content">
+                        <h4>Step 3: Set Up Your Categories</h4>
+                        <p>Organize your spending into clear categories:</p>
+                        
+                        <div class="category-builder">
+                            <div class="category-section">
+                                <h5>🏠 Fixed Expenses (Same Every Month)</h5>
+                                <ul>
+                                    <li>Rent/Mortgage</li>
+                                    <li>Insurance</li>
+                                    <li>Phone bill</li>
+                                    <li>Subscriptions</li>
+                                    <li>Loan payments</li>
+                                </ul>
+                            </div>
+                            <div class="category-section">
+                                <h5>📈 Variable Expenses (Changes Each Month)</h5>
+                                <ul>
+                                    <li>Groceries</li>
+                                    <li>Gas</li>
+                                    <li>Utilities</li>
+                                    <li>Entertainment</li>
+                                    <li>Dining out</li>
+                                </ul>
+                            </div>
+                            <div class="category-section">
+                                <h5>💰 Savings & Goals</h5>
+                                <ul>
+                                    <li>Emergency fund</li>
+                                    <li>Vacation savings</li>
+                                    <li>Car fund</li>
+                                    <li>Retirement (if working)</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="interactive-budget-builder">
+                            <h5>Try It: Build Your Categories</h5>
+                            <div class="budget-form">
+                                <div class="income-section">
+                                    <label>Monthly Income: $</label>
+                                    <input type="number" id="budgetBuilderIncome" placeholder="Enter your monthly income">
+                                </div>
+                                <div class="categories-section" id="budgetCategories">
+                                    <!-- Categories will be added dynamically -->
+                                </div>
+                                <button class="btn-lesson-nav" onclick="addBudgetCategory()">+ Add Category</button>
+                                <div class="budget-summary" id="budgetSummary" style="display: none;">
+                                    <p>Total Allocated: $<span id="totalAllocated">0</span></p>
+                                    <p>Remaining: $<span id="remaining">0</span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lesson-navigation">
+                        <button class="btn-lesson-nav secondary" onclick="prevLessonStep()">← Back</button>
+                        <button class="btn-lesson-nav" onclick="nextLessonStep()">Next →</button>
+                    </div>
+                </div>
+                
+                <!-- Step 5: Review and Adjust -->
+                <div class="lesson-step" data-step="5">
+                    <div class="lesson-content">
+                        <h4>Step 4: Review and Adjust</h4>
+                        <div class="concept-box">
+                            <h5>💡 Budgets Are Living Documents</h5>
+                            <p>Your first budget won't be perfect - and that's okay! The key is to start and improve over time.</p>
+                        </div>
+                        
+                        <div class="review-steps">
+                            <div class="review-step">
+                                <div class="step-number">1</div>
+                                <div class="step-content">
+                                    <h5>Track for a Month</h5>
+                                    <p>Follow your budget for 30 days and see how you do</p>
+                                </div>
+                            </div>
+                            <div class="review-step">
+                                <div class="step-number">2</div>
+                                <div class="step-content">
+                                    <h5>Identify Problems</h5>
+                                    <p>What categories were too high or too low?</p>
+                                </div>
+                            </div>
+                            <div class="review-step">
+                                <div class="step-number">3</div>
+                                <div class="step-content">
+                                    <h5>Make Adjustments</h5>
+                                    <p>Shift money between categories as needed</p>
+                                </div>
+                            </div>
+                            <div class="review-step">
+                                <div class="step-number">4</div>
+                                <div class="step-content">
+                                    <h5>Repeat</h5>
+                                    <p>Keep refining until it feels right</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="success-tips">
+                            <h5>🎯 Success Tips</h5>
+                            <ul>
+                                <li><strong>Start small:</strong> Budget just the essentials first</li>
+                                <li><strong>Be realistic:</strong> Don't cut everything fun</li>
+                                <li><strong>Include buffer money:</strong> Add 5-10% for unexpected expenses</li>
+                                <li><strong>Review weekly:</strong> Check in regularly to stay on track</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="lesson-navigation">
+                        <button class="btn-lesson-nav secondary" onclick="prevLessonStep()">← Back</button>
+                        <button class="btn-lesson-nav success" onclick="completeLesson('firstBudget')">Complete Lesson ✓</button>
+                    </div>
+                </div>
+                
+                <button class="btn-continue" onclick="hideLesson()">Back to Lessons</button>
+            </div>
+            
+            <!-- 50/30/20 Rule Lesson -->
+            <div class="lesson-detail" id="fiftyThirtyTwenty">
+                <div class="lesson-header">
+                    <h3>🎯 50/30/20 Rule Explained</h3>
+                    <div class="lesson-progress-indicator">
+                        <span class="progress-step active" data-step="1">1</span>
+                        <span class="progress-step" data-step="2">2</span>
+                        <span class="progress-step" data-step="3">3</span>
+                    </div>
+                </div>
+                
+                <!-- Step 1: The Rule Explained -->
+                <div class="lesson-step active" data-step="1">
+                    <div class="lesson-content">
+                        <h4>What is the 50/30/20 Rule?</h4>
+                        <div class="concept-box">
+                            <h5>💡 Simple Budget Framework</h5>
+                            <p>The 50/30/20 rule divides your after-tax income into three categories to help you budget effectively.</p>
+                        </div>
+                        
+                        <div class="rule-breakdown">
+                            <div class="rule-section needs">
+                                <div class="percentage">50%</div>
+                                <h5>Needs</h5>
+                                <p>Essential expenses you can't avoid</p>
+                                <ul>
+                                    <li>Housing (rent, utilities)</li>
+                                    <li>Food (groceries)</li>
+                                    <li>Transportation</li>
+                                    <li>Insurance</li>
+                                    <li>Minimum debt payments</li>
+                                </ul>
+                            </div>
+                            <div class="rule-section wants">
+                                <div class="percentage">30%</div>
+                                <h5>Wants</h5>
+                                <p>Things you enjoy but don't need</p>
+                                <ul>
+                                    <li>Dining out</li>
+                                    <li>Entertainment</li>
+                                    <li>Shopping</li>
+                                    <li>Hobbies</li>
+                                    <li>Travel</li>
+                                </ul>
+                            </div>
+                            <div class="rule-section savings">
+                                <div class="percentage">20%</div>
+                                <h5>Savings & Debt</h5>
+                                <p>Your future financial security</p>
+                                <ul>
+                                    <li>Emergency fund</li>
+                                    <li>Retirement savings</li>
+                                    <li>Extra debt payments</li>
+                                    <li>Investment accounts</li>
+                                    <li>Goal savings</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lesson-navigation">
+                        <button class="btn-lesson-nav" onclick="nextLessonStep()">Next →</button>
+                    </div>
+                </div>
+                
+                <!-- Step 2: How to Apply It -->
+                <div class="lesson-step" data-step="2">
+                    <div class="lesson-content">
+                        <h4>Applying the 50/30/20 Rule</h4>
+                        
+                        <div class="application-example">
+                            <h5>Example: $2,000 Monthly Income</h5>
+                            <div class="example-breakdown">
+                                <div class="breakdown-item">
+                                    <span class="amount">$1,000</span>
+                                    <span class="category">Needs (50%)</span>
+                                    <span class="details">Rent, groceries, utilities, phone</span>
+                                </div>
+                                <div class="breakdown-item">
+                                    <span class="amount">$600</span>
+                                    <span class="category">Wants (30%)</span>
+                                    <span class="details">Entertainment, dining out, shopping</span>
+                                </div>
+                                <div class="breakdown-item">
+                                    <span class="amount">$400</span>
+                                    <span class="category">Savings (20%)</span>
+                                    <span class="details">Emergency fund, retirement, goals</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="rule-calculator">
+                            <h5>Calculate Your 50/30/20 Budget</h5>
+                            <div class="calculator-input">
+                                <label>Your monthly after-tax income: $</label>
+                                <input type="number" id="ruleIncome" placeholder="Enter amount" onchange="calculate503020()">
+                            </div>
+                            <div class="calculator-results" id="ruleResults" style="display: none;">
+                                <div class="result-item needs">
+                                    <span class="result-amount" id="needsAmount">$0</span>
+                                    <span class="result-label">for Needs (50%)</span>
+                                </div>
+                                <div class="result-item wants">
+                                    <span class="result-amount" id="wantsAmount">$0</span>
+                                    <span class="result-label">for Wants (30%)</span>
+                                </div>
+                                <div class="result-item savings">
+                                    <span class="result-amount" id="savingsAmount">$0</span>
+                                    <span class="result-label">for Savings (20%)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lesson-navigation">
+                        <button class="btn-lesson-nav secondary" onclick="prevLessonStep()">← Back</button>
+                        <button class="btn-lesson-nav" onclick="nextLessonStep()">Next →</button>
+                    </div>
+                </div>
+                
+                <!-- Step 3: When to Adjust -->
+                <div class="lesson-step" data-step="3">
+                    <div class="lesson-content">
+                        <h4>When the Rule Doesn't Fit</h4>
+                        <div class="adjustment-scenarios">
+                            <div class="scenario-card">
+                                <h5>🏠 High Housing Costs</h5>
+                                <p><strong>Problem:</strong> Your rent alone is 60% of income</p>
+                                <p><strong>Solution:</strong> Try 60/20/20 or look for ways to reduce housing costs</p>
+                            </div>
+                            <div class="scenario-card">
+                                <h5>💳 High Debt</h5>
+                                <p><strong>Problem:</strong> Minimum payments exceed 20%</p>
+                                <p><strong>Solution:</strong> Focus on debt payoff first, then build savings</p>
+                            </div>
+                            <div class="scenario-card">
+                                <h5>💰 Low Income</h5>
+                                <p><strong>Problem:</strong> 50% doesn't cover basic needs</p>
+                                <p><strong>Solution:</strong> Focus on needs first, save what you can</p>
+                            </div>
+                            <div class="scenario-card">
+                                <h5>🎓 Student Life</h5>
+                                <p><strong>Problem:</strong> Irregular income from part-time work</p>
+                                <p><strong>Solution:</strong> Use percentages based on average monthly income</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flexibility-tips">
+                            <h5>💡 Remember: Rules Are Guidelines</h5>
+                            <ul>
+                                <li>The 50/30/20 rule is a starting point, not a law</li>
+                                <li>Adjust percentages based on your situation</li>
+                                <li>Focus on the principle: needs first, then wants, always save something</li>
+                                <li>Your budget should work for YOUR life</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="quiz-section">
+                            <div class="quiz-question">
+                                <p><strong>Quick Check:</strong> If you earn $1,500/month, how much should you save according to the 50/30/20 rule?</p>
+                                <div class="quiz-options">
+                                    <label class="quiz-option">
+                                        <input type="radio" name="q503020" value="a">
+                                        <span>$150</span>
+                                    </label>
+                                    <label class="quiz-option">
+                                        <input type="radio" name="q503020" value="b">
+                                        <span>$300</span>
+                                    </label>
+                                    <label class="quiz-option">
+                                        <input type="radio" name="q503020" value="c">
+                                        <span>$450</span>
+                                    </label>
+                                </div>
+                                <button class="btn-check-answer" onclick="checkQuizAnswer('q503020', 'b')">Check Answer</button>
+                                <div class="quiz-feedback" id="q503020-feedback"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lesson-navigation">
+                        <button class="btn-lesson-nav secondary" onclick="prevLessonStep()">← Back</button>
+                        <button class="btn-lesson-nav success" onclick="completeLesson('fiftyThirtyTwenty')">Complete Lesson ✓</button>
+                    </div>
+                </div>
+                
+                <button class="btn-continue" onclick="hideLesson()">Back to Lessons</button>
+            </div>
+            
+            <!-- Emergency Fund Lesson -->
+            <div class="lesson-detail" id="emergencyFundBasics">
+                <div class="lesson-header">
+                    <h3>🛡️ Emergency Fund Basics</h3>
+                    <div class="lesson-progress-indicator">
+                        <span class="progress-step active" data-step="1">1</span>
+                        <span class="progress-step" data-step="2">2</span>
+                        <span class="progress-step" data-step="3">3</span>
+                        <span class="progress-step" data-step="4">4</span>
+                        <span class="progress-step" data-step="5">5</span>
+                    </div>
+                </div>
+                
+                <!-- Step 1: What is an Emergency Fund -->
+                <div class="lesson-step active" data-step="1">
+                    <div class="lesson-content">
+                        <h4>What is an Emergency Fund?</h4>
+                        <div class="concept-box">
+                            <h5>💡 Emergency Fund Definition</h5>
+                            <p>An <strong>emergency fund</strong> is money set aside specifically for unexpected expenses or financial emergencies. It's your financial safety net.</p>
+                        </div>
+                        
+                        <div class="emergency-examples">
+                            <h5>🚨 What Counts as an Emergency?</h5>
+                            <div class="examples-grid">
+                                <div class="example-card emergency">
+                                    <h6>✅ True Emergencies</h6>
+                                    <ul>
+                                        <li>Medical bills</li>
+                                        <li>Car repairs</li>
+                                        <li>Job loss</li>
+                                        <li>Home repairs (broken AC, plumbing)</li>
+                                        <li>Family emergencies</li>
+                                    </ul>
+                                </div>
+                                <div class="example-card not-emergency">
+                                    <h6>❌ Not Emergencies</h6>
+                                    <ul>
+                                        <li>Vacation</li>
+                                        <li>New phone/laptop</li>
+                                        <li>Holiday gifts</li>
+                                        <li>Concert tickets</li>
+                                        <li>Shopping sales</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="why-important">
+                            <h5>🎯 Why You Need One</h5>
+                            <div class="benefits-grid">
+                                <div class="benefit-item">
+                                    <div class="benefit-icon">💳</div>
+                                    <h6>Avoid Debt</h6>
+                                    <p>Don't rely on credit cards for emergencies</p>
+                                </div>
+                                <div class="benefit-item">
+                                    <div class="benefit-icon">😌</div>
+                                    <h6>Peace of Mind</h6>
+                                    <p>Sleep better knowing you're prepared</p>
+                                </div>
+                                <div class="benefit-item">
+                                    <div class="benefit-icon">🎯</div>
+                                    <h6>Stay on Track</h6>
+                                    <p>Don't derail your financial goals</p>
+                                </div>
+                                <div class="benefit-item">
+                                    <div class="benefit-icon">💪</div>
+                                    <h6>Build Confidence</h6>
+                                    <p>Feel more in control of your finances</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lesson-navigation">
+                        <button class="btn-lesson-nav" onclick="nextLessonStep()">Next →</button>
+                    </div>
+                </div>
+                
+                <!-- Step 2: How Much to Save -->
+                <div class="lesson-step" data-step="2">
+                    <div class="lesson-content">
+                        <h4>How Much Should You Save?</h4>
+                        <div class="fund-size-guide">
+                            <h5>📏 Emergency Fund Size Guide</h5>
+                            <div class="size-recommendations">
+                                <div class="recommendation-card beginner">
+                                    <h6>🌱 Starter Emergency Fund</h6>
+                                    <div class="amount">$500 - $1,000</div>
+                                    <p><strong>Best for:</strong> Students, first-time savers</p>
+                                    <p>Covers small emergencies like car repairs or medical bills</p>
+                                </div>
+                                <div class="recommendation-card intermediate">
+                                    <h6>💪 Full Emergency Fund</h6>
+                                    <div class="amount">3-6 Months of Expenses</div>
+                                    <p><strong>Best for:</strong> Working adults with steady income</p>
+                                    <p>Covers major emergencies like job loss</p>
+                                </div>
+                                <div class="recommendation-card advanced">
+                                    <h6>🛡️ Extended Emergency Fund</h6>
+                                    <div class="amount">6-12 Months of Expenses</div>
+                                    <p><strong>Best for:</strong> Self-employed, single income families</p>
+                                    <p>Extra protection for unstable income</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="calculator-section">
+                            <h5>🧮 Calculate Your Target</h5>
+                            <div class="emergency-calculator">
+                                <div class="calculator-input">
+                                    <label>Your monthly expenses: $</label>
+                                    <input type="number" id="monthlyExpenses" placeholder="Enter amount" onchange="calculateEmergencyFund()">
+                                </div>
+                                <div class="calculator-input">
+                                    <label>Target months of coverage:</label>
+                                    <select id="targetMonths" onchange="calculateEmergencyFund()">
+                                        <option value="">Select...</option>
+                                        <option value="1">1 month (starter)</option>
+                                        <option value="3">3 months (minimum recommended)</option>
+                                        <option value="6">6 months (full protection)</option>
+                                        <option value="12">12 months (maximum security)</option>
+                                    </select>
+                                </div>
+                                <div class="calculator-result" id="emergencyFundResult" style="display: none;">
+                                    <h6>Your Emergency Fund Goal:</h6>
+                                    <div class="fund-target" id="fundTarget">$0</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lesson-navigation">
+                        <button class="btn-lesson-nav secondary" onclick="prevLessonStep()">← Back</button>
+                        <button class="btn-lesson-nav" onclick="nextLessonStep()">Next →</button>
+                    </div>
+                </div>
+                
+                <!-- Step 3: Where to Keep Your Emergency Fund -->
+                <div class="lesson-step" data-step="3">
+                    <div class="lesson-content">
+                        <h4>Where Should You Keep Your Emergency Fund?</h4>
+                        <div class="storage-options">
+                            <div class="option-card recommended">
+                                <h6>⭐ High-Yield Savings Account</h6>
+                                <div class="pros-cons">
+                                    <div class="pros">
+                                        <h6>Pros:</h6>
+                                        <ul>
+                                            <li>Earns interest (1-5% APY)</li>
+                                            <li>FDIC insured</li>
+                                            <li>Easy access</li>
+                                            <li>No market risk</li>
+                                        </ul>
+                                    </div>
+                                    <div class="cons">
+                                        <h6>Cons:</h6>
+                                        <ul>
+                                            <li>May have transfer limits</li>
+                                            <li>Interest rates can change</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="recommendation">💡 Best option for most people</div>
+                            </div>
+                            
+                            <div class="option-card okay">
+                                <h6>💰 Money Market Account</h6>
+                                <div class="pros-cons">
+                                    <div class="pros">
+                                        <h6>Pros:</h6>
+                                        <ul>
+                                            <li>Higher interest than regular savings</li>
+                                            <li>FDIC insured</li>
+                                            <li>May include debit card</li>
+                                        </ul>
+                                    </div>
+                                    <div class="cons">
+                                        <h6>Cons:</h6>
+                                        <ul>
+                                            <li>Higher minimum balance</li>
+                                            <li>More fees</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="option-card avoid">
+                                <h6>❌ Where NOT to Keep It</h6>
+                                <ul>
+                                    <li><strong>Stock market:</strong> Too risky, values fluctuate</li>
+                                    <li><strong>Checking account:</strong> Earns little/no interest</li>
+                                    <li><strong>Under your mattress:</strong> No growth, not secure</li>
+                                    <li><strong>CDs:</strong> Money locked up, early withdrawal penalties</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="key-features">
+                            <h5>🔑 Key Features to Look For</h5>
+                            <div class="features-checklist">
+                                <div class="feature-item">
+                                    <span class="checkmark">✓</span>
+                                    <span>No monthly fees or low minimum balance</span>
+                                </div>
+                                <div class="feature-item">
+                                    <span class="checkmark">✓</span>
+                                    <span>FDIC insured (protects up to $250,000)</span>
+                                </div>
+                                <div class="feature-item">
+                                    <span class="checkmark">✓</span>
+                                    <span>Easy online/mobile access</span>
+                                </div>
+                                <div class="feature-item">
+                                    <span class="checkmark">✓</span>
+                                    <span>Competitive interest rate</span>
+                                </div>
+                                <div class="feature-item">
+                                    <span class="checkmark">✓</span>
+                                    <span>Quick transfer to checking account</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lesson-navigation">
+                        <button class="btn-lesson-nav secondary" onclick="prevLessonStep()">← Back</button>
+                        <button class="btn-lesson-nav" onclick="nextLessonStep()">Next →</button>
+                    </div>
+                </div>
+                
+                <!-- Step 4: How to Build Your Fund -->
+                <div class="lesson-step" data-step="4">
+                    <div class="lesson-content">
+                        <h4>How to Build Your Emergency Fund</h4>
+                        <div class="building-strategies">
+                            <div class="strategy-card">
+                                <h6>💡 Strategy 1: Start Small</h6>
+                                <p>Don't aim for 6 months right away. Start with $25-50 per month until you reach $500-1000.</p>
+                                <div class="example">
+                                    <strong>Example:</strong> Save $50/month = $600 in one year
+                                </div>
+                            </div>
+                            
+                            <div class="strategy-card">
+                                <h6>🤖 Strategy 2: Automate It</h6>
+                                <p>Set up automatic transfers from checking to your emergency fund savings account.</p>
+                                <div class="example">
+                                    <strong>Tip:</strong> Transfer money the day after payday
+                                </div>
+                            </div>
+                            
+                            <div class="strategy-card">
+                                <h6>💰 Strategy 3: Use Windfalls</h6>
+                                <p>Put unexpected money directly into your emergency fund.</p>
+                                <div class="windfall-examples">
+                                    <strong>Examples:</strong>
+                                    <ul>
+                                        <li>Tax refunds</li>
+                                        <li>Birthday money</li>
+                                        <li>Work bonuses</li>
+                                        <li>Cash back rewards</li>
+                                        <li>Side hustle income</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <div class="strategy-card">
+                                <h6>🔄 Strategy 4: Round Up</h6>
+                                <p>Round up purchases and save the difference.</p>
+                                <div class="example">
+                                    <strong>Example:</strong> $4.67 coffee → Round to $5.00, save $0.33
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="savings-plan-builder">
+                            <h5>🎯 Build Your Savings Plan</h5>
+                            <div class="plan-calculator">
+                                <div class="input-row">
+                                    <label>Target emergency fund: $</label>
+                                    <input type="number" id="targetAmount" placeholder="1000" onchange="calculateSavingsPlan()">
+                                </div>
+                                <div class="input-row">
+                                    <label>How much can you save monthly: $</label>
+                                    <input type="number" id="monthlySavings" placeholder="50" onchange="calculateSavingsPlan()">
+                                </div>
+                                <div class="plan-result" id="savingsPlanResult" style="display: none;">
+                                    <div class="timeline">
+                                        <strong>Time to reach goal:</strong> <span id="timeToGoal">0 months</span>
+                                    </div>
+                                    <div class="encouragement">
+                                        <p><strong>💪 You've got this!</strong> <span id="encouragementText"></span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lesson-navigation">
+                        <button class="btn-lesson-nav secondary" onclick="prevLessonStep()">← Back</button>
+                        <button class="btn-lesson-nav" onclick="nextLessonStep()">Next →</button>
+                    </div>
+                </div>
+                
+                <!-- Step 5: Maintaining Your Fund -->
+                <div class="lesson-step" data-step="5">
+                    <div class="lesson-content">
+                        <h4>Maintaining Your Emergency Fund</h4>
+                        <div class="maintenance-rules">
+                            <h5>📋 Emergency Fund Rules</h5>
+                            <div class="rules-list">
+                                <div class="rule-item">
+                                    <div class="rule-number">1</div>
+                                    <div class="rule-content">
+                                        <h6>Only Use for True Emergencies</h6>
+                                        <p>Ask yourself: "Is this unexpected, necessary, and urgent?" If all three are yes, it's an emergency.</p>
+                                    </div>
+                                </div>
+                                <div class="rule-item">
+                                    <div class="rule-number">2</div>
+                                    <div class="rule-content">
+                                        <h6>Replenish Immediately</h6>
+                                        <p>If you use your emergency fund, make it a priority to build it back up as soon as possible.</p>
+                                    </div>
+                                </div>
+                                <div class="rule-item">
+                                    <div class="rule-number">3</div>
+                                    <div class="rule-content">
+                                        <h6>Keep It Separate</h6>
+                                        <p>Don't mix emergency funds with regular savings or checking accounts.</p>
+                                    </div>
+                                </div>
+                                <div class="rule-item">
+                                    <div class="rule-number">4</div>
+                                    <div class="rule-content">
+                                        <h6>Review Regularly</h6>
+                                        <p>As your expenses change, adjust your emergency fund target accordingly.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="success-tips">
+                            <h5>🏆 Success Tips</h5>
+                            <div class="tips-grid">
+                                <div class="tip-card">
+                                    <h6>🎯 Make it a Game</h6>
+                                    <p>Celebrate milestones like reaching $250, $500, $1000. Reward yourself (without spending emergency fund money!).</p>
+                                </div>
+                                <div class="tip-card">
+                                    <h6>👥 Get Support</h6>
+                                    <p>Tell friends/family about your goal. Having accountability helps you stick to it.</p>
+                                </div>
+                                <div class="tip-card">
+                                    <h6>📊 Track Progress</h6>
+                                    <p>Use apps, spreadsheets, or even a chart on your wall to visualize your progress.</p>
+                                </div>
+                                <div class="tip-card">
+                                    <h6>🔄 Start Over if Needed</h6>
+                                    <p>Life happens. If you have to start over, that's okay! The important thing is to keep building.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="quiz-section">
+                            <div class="quiz-question">
+                                <p><strong>Quick Check:</strong> Sarah has $800 in her emergency fund. Her car needs $600 in repairs to pass inspection for work. Should she use her emergency fund?</p>
+                                <div class="quiz-options">
+                                    <label class="quiz-option">
+                                        <input type="radio" name="qEmergency" value="a">
+                                        <span>No, she should get a loan instead</span>
+                                    </label>
+                                    <label class="quiz-option">
+                                        <input type="radio" name="qEmergency" value="b">
+                                        <span>Yes, this is a true emergency</span>
+                                    </label>
+                                    <label class="quiz-option">
+                                        <input type="radio" name="qEmergency" value="c">
+                                        <span>Only if she can't borrow the money from family</span>
+                                    </label>
+                                </div>
+                                <button class="btn-check-answer" onclick="checkQuizAnswer('qEmergency', 'b')">Check Answer</button>
+                                <div class="quiz-feedback" id="qEmergency-feedback"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lesson-navigation">
+                        <button class="btn-lesson-nav secondary" onclick="prevLessonStep()">← Back</button>
+                        <button class="btn-lesson-nav success" onclick="completeLesson('emergencyFundBasics')">Complete Lesson ✓</button>
+                    </div>
+                </div>
+                
+                <button class="btn-continue" onclick="hideLesson()">Back to Lessons</button>
+            </div>
+            
+            <div class="module-detail" id="emergencyFundDetail">
+                <h3>Emergency Fund - Interactive Lessons</h3>
+                <ul class="lesson-list">
+                    <li onclick="showLesson('emergencyFundBasics')">🛡️ Emergency Fund Basics</li>
+                    <li onclick="simulateLessonComplete(this)">📊 Building Your Fund Step by Step</li>
+                    <li onclick="simulateLessonComplete(this)">🏦 Choosing the Right Account</li>
+                    <li onclick="simulateLessonComplete(this)">🎯 Emergency Fund Challenges</li>
+                </ul>
+                
+                <div class="simulator-container">
+                    <h4>Emergency Fund Calculator</h4>
+                    <div class="emergency-fund-simulator">
+                        <div class="input-group">
+                            <label>Monthly Expenses:</label>
+                            <input type="number" id="efMonthlyExpenses" placeholder="Enter amount" onchange="updateEmergencyFundCalculator()">
+                        </div>
+                        <div class="input-group">
+                            <label>Current Emergency Fund:</label>
+                            <input type="number" id="efCurrentAmount" placeholder="Enter amount" onchange="updateEmergencyFundCalculator()">
+                        </div>
+                        <div class="input-group">
+                            <label>Monthly Savings Goal:</label>
+                            <input type="number" id="efMonthlySavings" placeholder="Enter amount" onchange="updateEmergencyFundCalculator()">
+                        </div>
+                        <div class="ef-results" id="efResults" style="display: none;">
+                            <div class="ef-status">
+                                <h5>Current Status:</h5>
+                                <div id="efStatus">Not calculated</div>
+                            </div>
+                            <div class="ef-timeline">
+                                <h5>Timeline to 6-Month Fund:</h5>
+                                <div id="efTimeline">Not calculated</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn-continue" onclick="hideModuleDetail()">Back to Dashboard</button>
+            </div>
+            
+            <div class="module-detail" id="budgetingDetail">
+                <h3>Budgeting 101 - Interactive Lessons</h3>
+                <ul class="lesson-list">
+                    <li onclick="showLesson('budgetBasics')">💰 Income vs Expenses</li>
+                    <li onclick="showLesson('firstBudget')">📝 Creating Your First Budget</li>
+                    <li onclick="showLesson('fiftyThirtyTwenty')">🎯 50/30/20 Rule Explained</li>
+                    <li onclick="simulateLessonComplete(this)">📱 Budget Tracking Tools</li>
+                    <li onclick="simulateLessonComplete(this)">💡 Smart Spending Tips</li>
+                </ul>
+                <div class="simulator-container">
+                    <h4>Try the Budget Calculator</h4>
+                    <div class="simulator-controls">
+                        <div class="input-group">
+                            <label>Monthly Income:</label>
+                            <input type="number" id="budgetIncome" placeholder="Enter amount">
+                        </div>
+                        <div class="input-group">
+                            <label>Essential Expenses (50%):</label>
+                            <input type="number" id="budgetEssentials" readonly>
+                        </div>
+                        <div class="input-group">
+                            <label>Wants (30%):</label>
+                            <input type="number" id="budgetWants" readonly>
+                        </div>
+                        <div class="input-group">
+                            <label>Savings (20%):</label>
+                            <input type="number" id="budgetSavings" readonly>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn-continue" onclick="hideModuleDetail()">Back to Dashboard</button>
+            </div>
+            
+            <div class="tools-section">
+                <h2>Interactive Tools</h2>
+                <div class="tools-grid" id="toolsGrid">
+                    <!-- Tools will be dynamically inserted based on user role -->
+                </div>
+            </div>
+            
+            <!-- FICO Simulator -->
+            <div class="module-detail" id="ficoSimulator">
+                <h3>FICO Score Simulator</h3>
+                <p>See how different actions affect your credit score:</p>
+                <div class="simulator-container">
+                    <div class="simulator-controls">
+                        <div class="input-group">
+                            <label>Current Score:</label>
+                            <input type="number" id="currentScore" value="650" min="300" max="850">
+                        </div>
+                        <div class="input-group">
+                            <label>Action to simulate:</label>
+                            <select id="scoreAction" onchange="updateScorePreview()">
+                                <option value="">Select an action...</option>
+                                <option value="ontime">Make on-time payment</option>
+                                <option value="missed">Miss a payment</option>
+                                <option value="newcard">Open new credit card</option>
+                                <option value="payoff">Pay off credit card balance</option>
+                                <option value="highutil">Use 80% of credit limit</option>
+                                <option value="lowutil">Keep utilization under 30%</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="score-result" id="scoreResult" style="display: none;">
+                        <h4>Projected Score</h4>
+                        <div class="new-score" id="newScore">650</div>
+                        <div class="score-change" id="scoreChange">No change</div>
+                    </div>
+                </div>
+                <button class="btn-continue" onclick="hideModuleDetail()">Back to Dashboard</button>
+            </div>
+            
+            <!-- Loan Calculator -->
+            <div class="module-detail" id="loanCalc">
+                <h3>Loan Calculator</h3>
+                <p>Calculate loan payments and see how different terms affect your budget:</p>
+                <div class="simulator-container">
+                    <div class="loan-calculator">
+                        <div class="calculator-inputs">
+                            <div class="input-group">
+                                <label>Loan Amount ($):</label>
+                                <input type="number" id="loanAmount" placeholder="e.g., 20000" onchange="calculateLoan()">
+                            </div>
+                            <div class="input-group">
+                                <label>Interest Rate (%):</label>
+                                <input type="number" id="interestRate" step="0.1" placeholder="e.g., 5.5" onchange="calculateLoan()">
+                            </div>
+                            <div class="input-group">
+                                <label>Loan Term:</label>
+                                <select id="loanTerm" onchange="calculateLoan()">
+                                    <option value="">Select term...</option>
+                                    <option value="12">1 year (12 months)</option>
+                                    <option value="24">2 years (24 months)</option>
+                                    <option value="36">3 years (36 months)</option>
+                                    <option value="48">4 years (48 months)</option>
+                                    <option value="60">5 years (60 months)</option>
+                                    <option value="72">6 years (72 months)</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label>Loan Type:</label>
+                                <select id="loanType">
+                                    <option value="auto">Auto Loan</option>
+                                    <option value="personal">Personal Loan</option>
+                                    <option value="student">Student Loan</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="loan-results" id="loanResults" style="display: none;">
+                            <div class="result-summary">
+                                <h4>Loan Summary</h4>
+                                <div class="result-item">
+                                    <span class="result-label">Monthly Payment:</span>
+                                    <span class="result-value" id="monthlyPayment">$0</span>
+                                </div>
+                                <div class="result-item">
+                                    <span class="result-label">Total Amount Paid:</span>
+                                    <span class="result-value" id="totalPaid">$0</span>
+                                </div>
+                                <div class="result-item">
+                                    <span class="result-label">Total Interest:</span>
+                                    <span class="result-value" id="totalInterest">$0</span>
+                                </div>
+                            </div>
+                            
+                            <div class="loan-comparison">
+                                <h5>💡 Smart Tips</h5>
+                                <div id="loanTips"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn-continue" onclick="hideModuleDetail()">Back to Dashboard</button>
+            </div>
+            
+            <!-- Debt Payoff Calculator -->
+            <div class="module-detail" id="debtCalc">
+                <h3>Debt Payoff Calculator</h3>
+                <p>Create a plan to pay off your debt faster and save on interest:</p>
+                <div class="simulator-container">
+                    <div class="debt-calculator">
+                        <div class="debt-inputs">
+                            <h4>Add Your Debts</h4>
+                            <div id="debtList">
+                                <!-- Debts will be added dynamically -->
+                            </div>
+                            <button class="btn-lesson-nav" onclick="addDebt()">+ Add Debt</button>
+                        </div>
+                        
+                        <div class="payoff-strategy">
+                            <h4>Payoff Strategy</h4>
+                            <div class="strategy-options">
+                                <div class="input-group">
+                                    <label>Strategy:</label>
+                                    <select id="payoffStrategy" onchange="calculateDebtPayoff()">
+                                        <option value="minimum">Minimum Payments Only</option>
+                                        <option value="snowball">Debt Snowball (Smallest First)</option>
+                                        <option value="avalanche">Debt Avalanche (Highest Interest First)</option>
+                                    </select>
+                                </div>
+                                <div class="input-group">
+                                    <label>Extra Monthly Payment ($):</label>
+                                    <input type="number" id="extraPayment" placeholder="0" onchange="calculateDebtPayoff()">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="debt-results" id="debtResults" style="display: none;">
+                            <div class="payoff-summary">
+                                <h4>Payoff Plan</h4>
+                                <div class="summary-stats">
+                                    <div class="stat-item">
+                                        <span class="stat-label">Time to Pay Off:</span>
+                                        <span class="stat-value" id="payoffTime">0 months</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span class="stat-label">Total Interest:</span>
+                                        <span class="stat-value" id="debtTotalInterest">$0</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span class="stat-label">Monthly Payment:</span>
+                                        <span class="stat-value" id="totalMonthlyPayment">$0</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="payoff-order" id="payoffOrder">
+                                <h5>Recommended Order:</h5>
+                                <!-- Payoff order will be shown here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn-continue" onclick="hideModuleDetail()">Back to Dashboard</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Achievements Modal -->
+    <div class="achievements-modal" id="achievementsModal" style="display: none;">
+        <div class="achievements-content">
+            <div class="achievements-header">
+                <h2>🏆 Your Achievements</h2>
+                <button class="close-btn" onclick="hideAchievements()">×</button>
+            </div>
+            
+            <div class="achievements-overview">
+                <div class="overview-stat">
+                    <div class="stat-number" id="totalBadges">0</div>
+                    <div class="stat-label">Badges Earned</div>
+                </div>
+                <div class="overview-stat">
+                    <div class="stat-number" id="totalLessons">0</div>
+                    <div class="stat-label">Lessons Completed</div>
+                </div>
+                <div class="overview-stat">
+                    <div class="stat-number" id="currentStreak">0</div>
+                    <div class="stat-label">Day Streak</div>
+                </div>
+            </div>
+            
+            <div class="achievements-grid" id="achievementsGrid">
+                <!-- Achievement badges will be populated here -->
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
