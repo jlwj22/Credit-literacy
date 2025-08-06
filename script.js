@@ -741,18 +741,35 @@ let currentLesson = '';
 function showLesson(lessonId) {
     console.log('Showing lesson:', lessonId);
     
-    // Hide module detail view, modules grid, and tools section
+    // Hide ALL module details first
     document.querySelectorAll('.module-detail').forEach(detail => {
         detail.classList.remove('active');
+        detail.style.display = 'none';
     });
-    document.getElementById('modulesGrid').style.display = 'none';
-    document.querySelector('.tools-section').style.display = 'none';
     
-    // Show lesson detail view
+    // Hide modules grid and tools section
+    const modulesGrid = document.getElementById('modulesGrid');
+    if (modulesGrid) {
+        modulesGrid.style.display = 'none';
+    }
+    
+    const toolsSection = document.querySelector('.tools-section');
+    if (toolsSection) {
+        toolsSection.style.display = 'none';
+    }
+    
+    // Hide ALL lesson details first
+    document.querySelectorAll('.lesson-detail').forEach(lesson => {
+        lesson.classList.remove('active');
+        lesson.style.display = 'none';
+    });
+    
+    // Show the specific lesson detail view
     const lessonElement = document.getElementById(lessonId);
     console.log('Lesson element found:', !!lessonElement);
     
     if (lessonElement) {
+        lessonElement.style.display = 'block';
         lessonElement.classList.add('active');
         currentLesson = lessonId;
         currentLessonStep = 1;
@@ -777,13 +794,22 @@ function showLesson(lessonId) {
 
 // Hide lesson and return to module view
 function hideLesson() {
+    // Hide all lesson details
     document.querySelectorAll('.lesson-detail').forEach(lesson => {
         lesson.classList.remove('active');
+        lesson.style.display = 'none';
     });
     
     // Show the modules grid and tools section again
-    document.getElementById('modulesGrid').style.display = 'grid';
-    document.querySelector('.tools-section').style.display = 'block';
+    const modulesGrid = document.getElementById('modulesGrid');
+    if (modulesGrid) {
+        modulesGrid.style.display = 'grid';
+    }
+    
+    const toolsSection = document.querySelector('.tools-section');
+    if (toolsSection) {
+        toolsSection.style.display = 'block';
+    }
 
     // Determine which module detail to show based on the current lesson
     let moduleToShow = 'creditBasics'; // default
