@@ -739,6 +739,8 @@ let currentLesson = '';
 
 // Show a specific lesson
 function showLesson(lessonId) {
+    console.log('Showing lesson:', lessonId);
+    
     // Hide module detail view, modules grid, and tools section
     document.querySelectorAll('.module-detail').forEach(detail => {
         detail.classList.remove('active');
@@ -748,11 +750,14 @@ function showLesson(lessonId) {
     
     // Show lesson detail view
     const lessonElement = document.getElementById(lessonId);
+    console.log('Lesson element found:', !!lessonElement);
+    
     if (lessonElement) {
         lessonElement.classList.add('active');
         currentLesson = lessonId;
         currentLessonStep = 1;
         updateLessonDisplay();
+        console.log('Lesson displayed, current step:', currentLessonStep);
     } else {
         // If lesson doesn't exist, show an error or redirect back
         console.warn(`Lesson ${lessonId} not found`);
@@ -794,7 +799,7 @@ function hideLesson() {
     }
     
     // Show the appropriate module detail
-    showModuleDetail(moduleToShow + 'Detail');
+    showModuleDetail(moduleToShow);
 }
 
 // Navigate to next lesson step
@@ -819,17 +824,28 @@ function prevLessonStep() {
 // Update lesson display based on current step
 function updateLessonDisplay() {
     const lessonElement = document.getElementById(currentLesson);
-    if (!lessonElement) return;
+    console.log('Updating lesson display for:', currentLesson, 'step:', currentLessonStep);
+    
+    if (!lessonElement) {
+        console.warn('Lesson element not found:', currentLesson);
+        return;
+    }
     
     // Hide all lesson steps
-    lessonElement.querySelectorAll('.lesson-step').forEach(step => {
+    const allSteps = lessonElement.querySelectorAll('.lesson-step');
+    console.log('Found lesson steps:', allSteps.length);
+    
+    allSteps.forEach(step => {
         step.classList.remove('active');
     });
     
     // Show current step
     const currentStepElement = lessonElement.querySelector(`[data-step="${currentLessonStep}"]`);
+    console.log('Current step element found:', !!currentStepElement);
+    
     if (currentStepElement) {
         currentStepElement.classList.add('active');
+        console.log('Added active class to step:', currentLessonStep);
     }
     
     // Update progress indicator
