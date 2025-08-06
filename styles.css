@@ -681,7 +681,7 @@ button:hover:not(:disabled) {
 }
 
 .lesson-detail.active {
-    display: block !important;
+    display: block;
 }
 
 .lesson-header {
@@ -725,8 +725,8 @@ button:hover:not(:disabled) {
     animation: fadeIn 0.3s ease-in;
 }
 
-.lesson-step.active {
-    display: block !important;
+.lesson-detail.active .lesson-step.active {
+    display: block;
 }
 
 
