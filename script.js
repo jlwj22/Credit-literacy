@@ -353,7 +353,7 @@ const roleModules = {
         },
         {
             id: 'debtManagement',
-            icon: '📉',
+            icon: '�',
             title: 'Debt Management',
             description: 'Strategies to pay off debt efficiently and improve your score.',
             progress: 0
@@ -739,10 +739,11 @@ let currentLesson = '';
 
 // Show a specific lesson
 function showLesson(lessonId) {
-    // Hide module detail view
+    // Hide module detail view and modules grid
     document.querySelectorAll('.module-detail').forEach(detail => {
         detail.classList.remove('active');
     });
+    document.getElementById('modulesGrid').style.display = 'none';
     
     // Show lesson detail view
     const lessonElement = document.getElementById(lessonId);
@@ -774,26 +775,36 @@ function hideLesson() {
         lesson.classList.remove('active');
     });
     
+    // Show the modules grid again
+    document.getElementById('modulesGrid').style.display = 'grid';
+
     // Determine which module detail to show based on the current lesson
     let moduleToShow = 'creditBasics'; // default
     
     if (currentLesson) {
-        if (currentLesson.includes('budget') || currentLesson === 'budgetBasics' || currentLesson === 'firstBudget' || currentLesson === 'fiftyThirtyTwenty') {
-            moduleToShow = 'budgeting';
-        } else if (currentLesson.includes('emergency') || currentLesson === 'emergencyFundBasics') {
-            moduleToShow = 'emergencyFund';
-        } else if (currentLesson.includes('credit') || currentLesson === 'whatIsCredit') {
+        const creditLessons = ['whatIsCredit', 'understandingFicoScores', 'scoreRanges', 'ficoFactors', 'creditVsDebit'];
+        const budgetingLessons = ['budgetBasics', 'firstBudget', 'fiftyThirtyTwenty'];
+        const emergencyFundLessons = ['emergencyFundBasics'];
+
+        if (creditLessons.includes(currentLesson)) {
             moduleToShow = 'creditBasics';
+        } else if (budgetingLessons.includes(currentLesson)) {
+            moduleToShow = 'budgeting';
+        } else if (emergencyFundLessons.includes(currentLesson)) {
+            moduleToShow = 'emergencyFund';
         }
     }
     
     // Show the appropriate module detail
-    showModuleDetail(moduleToShow);
+    showModuleDetail(moduleToShow + 'Detail');
 }
 
 // Navigate to next lesson step
 function nextLessonStep() {
-    if (currentLessonStep < 5) {
+    const lessonElement = document.getElementById(currentLesson);
+    if (!lessonElement) return;
+    const totalSteps = lessonElement.querySelectorAll('.lesson-step').length;
+    if (currentLessonStep < totalSteps) {
         currentLessonStep++;
         updateLessonDisplay();
     }
@@ -843,6 +854,7 @@ function checkQuizAnswer(questionId, correctAnswer) {
     if (!selectedAnswer) {
         feedback.innerHTML = '❗ Please select an answer first.';
         feedback.className = 'quiz-feedback incorrect';
+        feedback.style.display = 'block';
         return;
     }
     
@@ -857,12 +869,13 @@ function checkQuizAnswer(questionId, correctAnswer) {
     });
     
     if (selectedAnswer.value === correctAnswer) {
-        feedback.innerHTML = '✅ Correct! Credit is indeed the ability to borrow money with a promise to pay it back.';
+        feedback.innerHTML = '✅ Correct! Great job.';
         feedback.className = 'quiz-feedback correct';
     } else {
-        feedback.innerHTML = '❌ Not quite right. Credit is the ability to borrow money with a promise to pay it back, not money you already have or a savings account.';
+        feedback.innerHTML = '❌ Not quite right. Try again!';
         feedback.className = 'quiz-feedback incorrect';
     }
+    feedback.style.display = 'block';
     
     // Disable the check answer button
     const button = document.querySelector(`[onclick="checkQuizAnswer('${questionId}', '${correctAnswer}')"]`);
@@ -878,7 +891,7 @@ function completeLesson(lessonId) {
     const lessonListItem = document.querySelector(`[onclick="showLesson('${lessonId}')"]`);
     if (lessonListItem && !lessonListItem.classList.contains('completed')) {
         lessonListItem.classList.add('completed');
-        lessonListItem.innerHTML = '✅ ' + lessonListItem.innerHTML;
+        lessonListItem.innerHTML = '✅ ' + lessonListItem.innerText;
         
         // Track lesson completion for achievements
         if (!userAchievements.lessonsCompleted.includes(lessonId)) {
@@ -903,9 +916,13 @@ function completeLesson(lessonId) {
 function getLessonName(lessonId) {
     const lessonNames = {
         'whatIsCredit': 'What is Credit?',
+        'understandingFicoScores': 'Understanding FICO Scores',
+        'scoreRanges': 'Score Ranges: What They Mean',
+        'ficoFactors': '5 Factors That Affect Your Score',
+        'creditVsDebit': 'Credit vs Debit Cards',
         'budgetBasics': 'Income vs Expenses',
         'firstBudget': 'Creating Your First Budget',
-        'fiftyThirtyTwenty': '50/30/20 Rule',
+        'fiftyThirtyTwenty': '50/30/20 Rule Explained',
         'emergencyFundBasics': 'Emergency Fund Basics'
     };
     return lessonNames[lessonId] || 'Financial Lesson';
@@ -942,7 +959,7 @@ function checkLessonAchievements(lessonId) {
     }
     
     // Credit rookie achievement
-    if (lessonId === 'whatIsCredit' && !userAchievements.badges.includes('credit-rookie')) {
+    if (lessonId.toLowerCase().includes('credit') && !userAchievements.badges.includes('credit-rookie')) {
         awardBadge('credit-rookie');
     }
     
