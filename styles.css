@@ -725,9 +725,10 @@ button:hover:not(:disabled) {
     animation: fadeIn 0.3s ease-in;
 }
 
-.lesson-step.active {
+.lesson-detail.active .lesson-step.active {
     display: block;
 }
+
 
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(10px); }

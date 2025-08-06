@@ -353,7 +353,7 @@ const roleModules = {
         },
         {
             id: 'debtManagement',
-            icon: '�',
+            icon: '📉',
             title: 'Debt Management',
             description: 'Strategies to pay off debt efficiently and improve your score.',
             progress: 0
@@ -739,11 +739,12 @@ let currentLesson = '';
 
 // Show a specific lesson
 function showLesson(lessonId) {
-    // Hide module detail view and modules grid
+    // Hide module detail view, modules grid, and tools section
     document.querySelectorAll('.module-detail').forEach(detail => {
         detail.classList.remove('active');
     });
     document.getElementById('modulesGrid').style.display = 'none';
+    document.querySelector('.tools-section').style.display = 'none';
     
     // Show lesson detail view
     const lessonElement = document.getElementById(lessonId);
@@ -775,22 +776,19 @@ function hideLesson() {
         lesson.classList.remove('active');
     });
     
-    // Show the modules grid again
+    // Show the modules grid and tools section again
     document.getElementById('modulesGrid').style.display = 'grid';
+    document.querySelector('.tools-section').style.display = 'block';
 
     // Determine which module detail to show based on the current lesson
     let moduleToShow = 'creditBasics'; // default
     
     if (currentLesson) {
-        const creditLessons = ['whatIsCredit', 'understandingFicoScores', 'scoreRanges', 'ficoFactors', 'creditVsDebit'];
-        const budgetingLessons = ['budgetBasics', 'firstBudget', 'fiftyThirtyTwenty'];
-        const emergencyFundLessons = ['emergencyFundBasics'];
-
-        if (creditLessons.includes(currentLesson)) {
+        if (document.querySelector(`#creditBasicsDetail .lesson-list [onclick="showLesson('${currentLesson}')"]`)) {
             moduleToShow = 'creditBasics';
-        } else if (budgetingLessons.includes(currentLesson)) {
+        } else if (document.querySelector(`#budgetingDetail .lesson-list [onclick="showLesson('${currentLesson}')"]`)) {
             moduleToShow = 'budgeting';
-        } else if (emergencyFundLessons.includes(currentLesson)) {
+        } else if (document.querySelector(`#emergencyFundDetail .lesson-list [onclick="showLesson('${currentLesson}')"]`)) {
             moduleToShow = 'emergencyFund';
         }
     }
@@ -1541,7 +1539,7 @@ function updateEmergencyFundCalculator() {
             if (years > 0) {
                 timelineText = `${years} year${years > 1 ? 's' : ''}`;
                 if (months > 0) {
-                    timelineText += ` and ${months} month${months > 1 ? 's' : ''}`;
+                    timelineText += ` and ${months} month${months !== 1 ? 's' : ''}`;
                 }
             } else {
                 timelineText = `${monthsToTarget} month${monthsToTarget > 1 ? 's' : ''}`;
