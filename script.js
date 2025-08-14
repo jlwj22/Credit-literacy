@@ -430,13 +430,13 @@ const roleModules = {
 
 const roleTools = {
     highschool: [
-        { icon: '🎮', title: 'Credit Score Simulator', id: 'creditSimulator' }
+        { icon: '🎮', title: 'Credit Score Simulator', id: 'creditSimulator' },
         { icon: '📝', title: 'Simple Budget Builder', id: 'budgetBuilder' },
         { icon: '🎯', title: 'Credit Quiz', id: 'creditQuiz' },
         { icon: '📚', title: 'Glossary', id: 'glossary' }
     ],
     recentgrad: [
-        { icon: '🎮', title: 'Credit Score Simulator', id: 'creditSimulator' }
+        { icon: '🎮', title: 'Credit Score Simulator', id: 'creditSimulator' },
         { icon: '📝', title: 'Budget Calculator', id: 'budgetBuilder' },
         { icon: '🎓', title: 'Loan Calculator', id: 'loanCalc' },
         { icon: '📈', title: 'Progress Tracker', id: 'progress' }
@@ -448,13 +448,13 @@ const roleTools = {
         { icon: '📉', title: 'Debt Payoff Calculator', id: 'debtCalc' }
     ],
     parttime: [
-        { icon: '🎮', title: 'Credit Score Simulator', id: 'creditSimulator' }
+        { icon: '🎮', title: 'Credit Score Simulator', id: 'creditSimulator' },
         { icon: '📝', title: 'Variable Income Budget', id: 'budgetBuilder' },
         { icon: '💰', title: 'Savings Goal Tracker', id: 'savingsTracker' },
         { icon: '📈', title: 'Progress Dashboard', id: 'progress' }
     ],
     other: [
-        { icon: '🎮', title: 'Credit Score Simulator', id: 'creditSimulator' }
+        { icon: '🎮', title: 'Credit Score Simulator', id: 'creditSimulator' },
         { icon: '📝', title: 'Budget Builder', id: 'budgetBuilder' },
         { icon: '🎯', title: 'Practice Quizzes', id: 'quizzes' },
         { icon: '📈', title: 'Learning Progress', id: 'progress' }
