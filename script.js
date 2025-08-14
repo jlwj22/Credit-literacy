@@ -122,7 +122,7 @@ function validatePositiveNumber(value, fieldName, min = 0, max = Infinity) {
 
 // Load user achievements from localStorage
 function loadUserProgress() {
-    const saved = localStorage.getItem('ficowise-progress');
+    const saved = localStorage.getItem('creditsmart-progress');
     if (saved) {
         userAchievements = { ...userAchievements, ...JSON.parse(saved) };
     }
@@ -131,7 +131,7 @@ function loadUserProgress() {
 
 // Save user achievements to localStorage
 function saveUserProgress() {
-    localStorage.setItem('ficowise-progress', JSON.stringify(userAchievements));
+    localStorage.setItem('creditsmart-progress', JSON.stringify(userAchievements));
 }
 
 // Update streak counter
@@ -430,31 +430,31 @@ const roleModules = {
 
 const roleTools = {
     highschool: [
-        { icon: '🎮', title: 'FICO Simulator', id: 'ficoSimulator' },
+        { icon: '🎮', title: 'Credit Score Simulator', id: 'creditSimulator' }
         { icon: '📝', title: 'Simple Budget Builder', id: 'budgetBuilder' },
         { icon: '🎯', title: 'Credit Quiz', id: 'creditQuiz' },
         { icon: '📚', title: 'Glossary', id: 'glossary' }
     ],
     recentgrad: [
-        { icon: '🎮', title: 'FICO Simulator', id: 'ficoSimulator' },
+        { icon: '🎮', title: 'Credit Score Simulator', id: 'creditSimulator' }
         { icon: '📝', title: 'Budget Calculator', id: 'budgetBuilder' },
         { icon: '🎓', title: 'Loan Calculator', id: 'loanCalc' },
         { icon: '📈', title: 'Progress Tracker', id: 'progress' }
     ],
     fulltime: [
         { icon: '📊', title: 'Investment Calculator', id: 'investCalc' },
-        { icon: '🎮', title: 'Advanced FICO Simulator', id: 'ficoSimulator' },
+        { icon: '🎮', title: 'Advanced Credit Simulator', id: 'creditSimulator' },
         { icon: '💰', title: 'Retirement Planner', id: 'retirement' },
         { icon: '📉', title: 'Debt Payoff Calculator', id: 'debtCalc' }
     ],
     parttime: [
-        { icon: '🎮', title: 'FICO Simulator', id: 'ficoSimulator' },
+        { icon: '🎮', title: 'Credit Score Simulator', id: 'creditSimulator' }
         { icon: '📝', title: 'Variable Income Budget', id: 'budgetBuilder' },
         { icon: '💰', title: 'Savings Goal Tracker', id: 'savingsTracker' },
         { icon: '📈', title: 'Progress Dashboard', id: 'progress' }
     ],
     other: [
-        { icon: '🎮', title: 'FICO Simulator', id: 'ficoSimulator' },
+        { icon: '🎮', title: 'Credit Score Simulator', id: 'creditSimulator' }
         { icon: '📝', title: 'Budget Builder', id: 'budgetBuilder' },
         { icon: '🎯', title: 'Practice Quizzes', id: 'quizzes' },
         { icon: '📈', title: 'Learning Progress', id: 'progress' }
@@ -778,9 +778,9 @@ function completeLesson(lessonId) {
 function getLessonName(lessonId) {
     const lessonNames = {
         'whatIsCredit': 'What is Credit?',
-        'understandingFicoScores': 'Understanding FICO Scores',
+        'understandingCreditScores': 'Understanding Credit Scores',
         'scoreRanges': 'Score Ranges: What They Mean',
-        'ficoFactors': '5 Factors That Affect Your Score',
+        'creditFactors': '5 Factors That Affect Your Score',
         'creditVsDebit': 'Credit vs Debit Cards',
         'budgetBasics': 'Income vs Expenses',
         'firstBudget': 'Creating Your First Budget',
